@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import { Link } from 'react-router-dom';
 
-import AuthContext from '../Logic/AppContext';
+import AuthContext from '../../Logic/AppContext';
 
 class Header extends React.Component {
 

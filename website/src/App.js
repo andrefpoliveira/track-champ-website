@@ -2,9 +2,7 @@ import './App.css';
 
 import { Outlet } from 'react-router-dom';
 
-import Header from './Components/Header';
-import AuthContext from './Logic/AppContext';
-import Profile from './Logic/Profile';
+import Header from './Components/Header/Header';
 
 function App() {
 	return (
