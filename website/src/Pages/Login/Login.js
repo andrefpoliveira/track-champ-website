@@ -9,46 +9,68 @@ import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../../Logic/Requests/requests";
+import Profile from "../../Logic/Profile";
+import AuthContext from "../../Logic/AppContext";
 
 export default function LoginPage() {
 	const [isLoading, setIsLoading] = React.useState(false);
+	const [errors, setErrors] = React.useState({});
+	const { setProfile } = React.useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		setIsLoading(true);
+
 		e.preventDefault();
 
 		const formData = new FormData(e.target);
 		const formDataObj = Object.fromEntries(formData.entries());
 
-		let validForm = validateForm(formDataObj);
+		let validationErrors = validateForm(formDataObj);
 
-		if (!validForm) {
-			alert("Preencha todos os campos!");
-			setIsLoading(false);
-			return;
-		}
+		if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            setIsLoading(false);
+            return;
+        }
+
+		setErrors({});  // Clear errors if no validation issues
 
 		let result = await login(formDataObj);
 
 		if (result.success) {
-			alert("Login com sucesso!");
+			let info = result['info'];
+
+			let profile = new Profile(
+				info['account_id'],
+				info['name'],
+				info['profile_image']
+			);
+
+			setProfile(profile);
+
 			navigate('/');
-		} else {
-			alert("Erro ao entrar!");
 		}
+
+		setIsLoading(false);
 	}
 
 	const validateForm = (form) => {
-		let valid = true;
-		for (const [_, value] of Object.entries(form)) {
-			if (!value) {
-				valid = false;
-			}
-		}
+        let validationErrors = {};
 
-		return valid;
-	}
+		let email = form.email.trim();
+		let password = form.password.trim();
+
+        if (!email) {
+            validationErrors.email = "O email é obrigatório.";
+        }
+
+        if (!password) {
+            validationErrors.password = "A password é obrigatória.";
+        }
+
+        return validationErrors;
+    };
 
 	return (
 		<div id="login-page">
@@ -59,7 +81,12 @@ export default function LoginPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formEmail">
 							<Form.Label><b>Email</b></Form.Label>
-							<Form.Control type="email" name="email" />
+							<Form.Control
+								className={errors.email ? "form-error" : ""}
+								type="email"
+								name="email"
+							/>
+							{errors.email && <p className="form-error-label">{errors.email}</p>}
 						</Form.Group>
 					</Col>
 				</Row>
@@ -68,7 +95,12 @@ export default function LoginPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label><b>Password</b></Form.Label>
-							<Form.Control type="password" name="password" />
+							<Form.Control
+								className={errors.password ? "form-error" : ""}
+								type="password"
+								name="password"
+							/>
+							{errors.password && <p className="form-error-label">{errors.password}</p>}
 						</Form.Group>
 					</Col>
 				</Row>

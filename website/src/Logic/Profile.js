@@ -1,30 +1,20 @@
 class Profile {
-	constructor(name, profileImage, username, accountId) {
+	constructor(accountId, name, profileImage) {
 		this.name = name;
 		this.profileImage = profileImage;
-		this.username = username;
 		this.accountId = accountId;
+	}
+
+	getAccountId() {
+		return this.accountId;
 	}
 
 	getName() {
 		return this.name;
 	}
 
-	setName(name) {
-		this.name = name;
-		return this;
-	}
-
 	getProfileImage() {
 		return this.profileImage;
-	}
-
-	getUsername() {
-		return this.username;
-	}
-
-	getAccountId() {
-		return this.accountId;
 	}
 }
 

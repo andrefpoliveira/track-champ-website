@@ -1,0 +1,53 @@
+.form-error {
+	border: 1px solid red;
+}
+
+.form-error-label {
+	color: red;
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+button {
+	background-color: #07f;
+}
+
+a {
+	color: #07f;
+}
+
+.form-control {
+	display: block;
+	height: 38px;
+	padding: 5px 30px 5px 10px;
+	border: 0;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+	color: #000;
+	font-size: 15px;
+	line-height: 16px;
+	transition: box-shadow .1s ease-in-out;
+}
+
+.form-control:focus,
+input:focus {
+	outline: none;
+	border: 2px solid #07f;
+}
+
+form {
+	max-width: 500px;
+	width: 100%;
+}
+
+.row {
+	margin: 0px 1rem;
+}
+
+.col {
+	padding: 0 calc(var(--bs-gutter-x)* .5);
+}
+
+.form-free-row {
+	margin: 0 calc(1rem + calc(var(--bs-gutter-x)* .5));
+}

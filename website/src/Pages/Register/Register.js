@@ -13,8 +13,7 @@ import { register } from "../../Logic/Requests/requests";
 
 export default function RegisterPage() {
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [validated, setValidated] = React.useState(false);
-
+	const [errors, setErrors] = React.useState({});
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -25,34 +24,69 @@ export default function RegisterPage() {
 		const formData = new FormData(e.target);
 		const formDataObj = Object.fromEntries(formData.entries());
 
-		let validForm = validateForm(formDataObj);
+		let validationErrors = validateForm(formDataObj);
 
-		if (!validForm) {
-			alert("Preencha todos os campos!");
-			setIsLoading(false);
-			return;
-		}
+		if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            setIsLoading(false);
+            return;
+        }
+
+		setErrors({});  // Clear errors if no validation issues
 
 		let result = await register(formDataObj);
 
 		if (result.success) {
-			alert("Conta criada com sucesso!");
 			navigate('/login');
-		} else {
-			alert("Erro ao criar conta!");
 		}
+
+		setIsLoading(false);
 	}
 
 	const validateForm = (form) => {
-		let valid = true;
-		for (const [_, value] of Object.entries(form)) {
-			if (!value) {
-				valid = false;
-			}
+        let validationErrors = {};
+
+		let firstName = form.firstName.trim();
+		let lastName = form.lastName.trim();
+		let email = form.email.trim();
+		let birthday = form.birthday.trim();
+		let password = form.password.trim();
+
+        // Custom validation for each field
+        if (!firstName) {
+            validationErrors.firstName = "O nome próprio é obrigatório.";
+        }
+
+        if (!lastName) {
+            validationErrors.lastName = "O apelido é obrigatório.";
+        }
+
+        if (!email) {
+            validationErrors.email = "O email é obrigatório.";
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            validationErrors.email = "O formato de email é inválido.";
+        }
+
+        if (!birthday) {
+            validationErrors.birthday = "A data de nascimento é obrigatória.";
+        }
+
+        if (!password) {
+            validationErrors.password = "A password é obrigatória.";
+        } else if (password.length < 8) {
+            validationErrors.password = "A password deve ter pelo menos 8 caracteres.";
+        } else if (password.toLowerCase() === password) {
+			validationErrors.password = "A password tem de ter pelo menos 1 letra maiúscula"
+		} else if (password.toUpperCase() === password) {
+			validationErrors.password = "A password tem de ter pelo menos 1 letra minúscula"
+		} else if (!/\d/.test(password)) {
+			validationErrors.password = "A password tem de ter pelo menos 1 número";
+		} else if (!/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(password)) {
+			validationErrors.password = "A password tem de ter pelo menos 1 caracter especial";
 		}
 
-		return valid;
-	}
+        return validationErrors;
+    };
 
 	return (
 		<div id="register-page">
@@ -65,13 +99,23 @@ export default function RegisterPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formFirstName">
 							<Form.Label><b>Nome Próprio</b></Form.Label>
-							<Form.Control type="text" name="firstName" />
+							<Form.Control
+								className={errors.firstName ? "form-error" : ""}
+								type="text"
+								name="firstName"
+							/>
+							{errors.firstName && <p className="form-error-label">{errors.firstName}</p>}
 						</Form.Group>
 					</Col>
 					<Col>
 						<Form.Group className="mb-3" controlId="formLastName">
 							<Form.Label><b>Apelido</b></Form.Label>
-							<Form.Control type="text" name="lastName" />
+							<Form.Control
+								className={errors.lastName ? "form-error" : ""}
+								type="text"
+								name="lastName"
+							/>
+							{errors.lastName && <p className="form-error-label">{errors.lastName}</p>}
 						</Form.Group>
 					</Col>
 				</Row>
@@ -80,7 +124,12 @@ export default function RegisterPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formEmail">
 							<Form.Label><b>Email</b></Form.Label>
-							<Form.Control type="email" name="email" />
+							<Form.Control
+								className={errors.email ? "form-error" : ""}
+								type="email"
+								name="email"
+							/>
+							{errors.email && <p className="form-error-label">{errors.email}</p>}
 						</Form.Group>
 					</Col>
 				</Row>
@@ -89,7 +138,12 @@ export default function RegisterPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formBirthday">
 							<Form.Label><b>Data de Nascimento</b></Form.Label>
-							<Form.Control type="date" name="birthday" />
+							<Form.Control
+								className={errors.birthday ? "form-error" : ""}
+								type="date"
+								name="birthday"
+							/>
+							{errors.birthday && <p className="form-error-label">{errors.birthday}</p>}
 						</Form.Group>
 					</Col>
 				</Row>
@@ -98,7 +152,12 @@ export default function RegisterPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label><b>Password</b></Form.Label>
-							<Form.Control type="password" name="password" />
+							<Form.Control
+								className={errors.password ? "form-error" : ""}
+								type="password"
+								name="password"
+							/>
+							{errors.password && <p className="form-error-label">{errors.password}</p>}
 						</Form.Group>
 					</Col>
 				</Row>

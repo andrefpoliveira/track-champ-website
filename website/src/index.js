@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import AuthContext from './Logic/AppContext';
 
+import './CSS/forms.css';
+
 import {
 	createBrowserRouter,
 	RouterProvider,
