@@ -24,7 +24,7 @@ class Header extends React.Component {
 									<>
 										{
 											profile
-												? <div>
+												? <div className='profile-info'>
 													<span><b>{profile.getName()}</b></span>
 													<img className="profile-picture" src={profile.getProfileImage()} alt={profile.getName()} />
 												</div>
