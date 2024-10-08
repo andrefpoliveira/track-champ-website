@@ -49,7 +49,7 @@ export default function RegisterPage() {
 		let firstName = form.firstName.trim();
 		let lastName = form.lastName.trim();
 		let email = form.email.trim();
-		let birthday = form.birthday.trim();
+		let date = form.date.trim();
 		let password = form.password.trim();
 
         // Custom validation for each field
@@ -67,8 +67,8 @@ export default function RegisterPage() {
             validationErrors.email = "O formato de email é inválido.";
         }
 
-        if (!birthday) {
-            validationErrors.birthday = "A data de nascimento é obrigatória.";
+        if (!date) {
+            validationErrors.date = "A data é obrigatória.";
         }
 
         if (!password) {
@@ -76,13 +76,13 @@ export default function RegisterPage() {
         } else if (password.length < 8) {
             validationErrors.password = "A password deve ter pelo menos 8 caracteres.";
         } else if (password.toLowerCase() === password) {
-			validationErrors.password = "A password tem de ter pelo menos 1 letra maiúscula"
+			validationErrors.password = "A password tem de ter pelo menos 1 letra maiúscula."
 		} else if (password.toUpperCase() === password) {
-			validationErrors.password = "A password tem de ter pelo menos 1 letra minúscula"
+			validationErrors.password = "A password tem de ter pelo menos 1 letra minúscula."
 		} else if (!/\d/.test(password)) {
-			validationErrors.password = "A password tem de ter pelo menos 1 número";
+			validationErrors.password = "A password tem de ter pelo menos 1 número.";
 		} else if (!/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(password)) {
-			validationErrors.password = "A password tem de ter pelo menos 1 caracter especial";
+			validationErrors.password = "A password tem de ter pelo menos 1 caracter especial.";
 		}
 
         return validationErrors;
@@ -136,14 +136,14 @@ export default function RegisterPage() {
 
 				<Row>
 					<Col>
-						<Form.Group className="mb-3" controlId="formBirthday">
+						<Form.Group className="mb-3" controlId="formDate">
 							<Form.Label><b>Data de Nascimento</b></Form.Label>
 							<Form.Control
-								className={errors.birthday ? "form-error" : ""}
+								className={errors.date ? "form-error" : ""}
 								type="date"
-								name="birthday"
+								name="date"
 							/>
-							{errors.birthday && <p className="form-error-label">{errors.birthday}</p>}
+							{errors.date && <p className="form-error-label">{errors.date}</p>}
 						</Form.Group>
 					</Col>
 				</Row>
