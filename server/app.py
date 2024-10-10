@@ -4,7 +4,6 @@ from http import HTTPStatus
 from extension import app, db
 
 from src.api.auth import auth_bp
-from src.database.models.AccountUsers import AccountUsers
 from src.logging.setup import setup_login
 
 setup_login(app)
