@@ -4,6 +4,7 @@ from flask import request, jsonify
 from http import HTTPStatus
 
 from src.api.auth.utils.security import encrypt_password
+from src.database.models.GenderEnum import match_gender
 from src.database.wrapper import authentication
 from src.validator.validator import Validator
 
@@ -33,7 +34,8 @@ def register():
 		email=payload['email'],
 		password=password,
 		salt=salt,
-		birthday=payload['birthday']
+		birthday=payload['birthday'],
+		gender=match_gender(payload['gender'])
 	)
 	
 	return jsonify({ 'success': True }), HTTPStatus.CREATED
