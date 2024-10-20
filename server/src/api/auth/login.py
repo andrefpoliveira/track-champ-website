@@ -20,9 +20,16 @@ def login():
 	salt = authentication.get_salt(payload['email'])
 	password, _ = encrypt_password(payload['password'], salt)
 
-	login_successful = authentication.login(payload['email'], password)
+	user = authentication.login(payload['email'], password)
 	
-	if not login_successful:
+	if user is None:
 		return jsonify({ 'error': 'Invalid password' }), HTTPStatus.UNAUTHORIZED
 	
-	return jsonify({ 'success': True }), HTTPStatus.OK
+	return jsonify({
+		'success': True,
+		'info': {
+			'account_id': user.id,
+			'name': user.firstName + ' ' + user.lastName,
+			'profile_image': user.profileImage
+		}
+	}), HTTPStatus.OK

@@ -34,7 +34,7 @@ def register():
 		email=payload['email'],
 		password=password,
 		salt=salt,
-		birthday=payload['birthday'],
+		birthday=payload['date'],
 		gender=match_gender(payload['gender'])
 	)
 	

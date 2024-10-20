@@ -16,7 +16,8 @@ a {
 	color: #07f;
 }
 
-.form-control {
+.form-control,
+.form-select {
 	display: block;
 	height: 38px;
 	padding: 5px 30px 5px 10px;
@@ -30,7 +31,8 @@ a {
 }
 
 .form-control:focus,
-input:focus {
+input:focus,
+.form-select:focus {
 	outline: none;
 	border: 2px solid #07f;
 }

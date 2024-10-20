@@ -27,10 +27,10 @@ export default function RegisterPage() {
 		let validationErrors = validateForm(formDataObj);
 
 		if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            setIsLoading(false);
-            return;
-        }
+			setErrors(validationErrors);
+			setIsLoading(false);
+			return;
+		}
 
 		setErrors({});  // Clear errors if no validation issues
 
@@ -44,7 +44,7 @@ export default function RegisterPage() {
 	}
 
 	const validateForm = (form) => {
-        let validationErrors = {};
+		let validationErrors = {};
 
 		let firstName = form.firstName.trim();
 		let lastName = form.lastName.trim();
@@ -52,30 +52,30 @@ export default function RegisterPage() {
 		let date = form.date.trim();
 		let password = form.password.trim();
 
-        // Custom validation for each field
-        if (!firstName) {
-            validationErrors.firstName = "O nome próprio é obrigatório.";
-        }
+		// Custom validation for each field
+		if (!firstName) {
+			validationErrors.firstName = "O nome próprio é obrigatório.";
+		}
 
-        if (!lastName) {
-            validationErrors.lastName = "O apelido é obrigatório.";
-        }
+		if (!lastName) {
+			validationErrors.lastName = "O apelido é obrigatório.";
+		}
 
-        if (!email) {
-            validationErrors.email = "O email é obrigatório.";
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            validationErrors.email = "O formato de email é inválido.";
-        }
+		if (!email) {
+			validationErrors.email = "O email é obrigatório.";
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+			validationErrors.email = "O formato de email é inválido.";
+		}
 
-        if (!date) {
-            validationErrors.date = "A data é obrigatória.";
-        }
+		if (!date) {
+			validationErrors.date = "A data é obrigatória.";
+		}
 
-        if (!password) {
-            validationErrors.password = "A password é obrigatória.";
-        } else if (password.length < 8) {
-            validationErrors.password = "A password deve ter pelo menos 8 caracteres.";
-        } else if (password.toLowerCase() === password) {
+		if (!password) {
+			validationErrors.password = "A password é obrigatória.";
+		} else if (password.length < 8) {
+			validationErrors.password = "A password deve ter pelo menos 8 caracteres.";
+		} else if (password.toLowerCase() === password) {
 			validationErrors.password = "A password tem de ter pelo menos 1 letra maiúscula."
 		} else if (password.toUpperCase() === password) {
 			validationErrors.password = "A password tem de ter pelo menos 1 letra minúscula."
@@ -85,8 +85,8 @@ export default function RegisterPage() {
 			validationErrors.password = "A password tem de ter pelo menos 1 caracter especial.";
 		}
 
-        return validationErrors;
-    };
+		return validationErrors;
+	};
 
 	return (
 		<div id="register-page">
@@ -144,6 +144,20 @@ export default function RegisterPage() {
 								name="date"
 							/>
 							{errors.date && <p className="form-error-label">{errors.date}</p>}
+						</Form.Group>
+					</Col>
+					<Col>
+						<Form.Group className="mb-3" controlId="formGender">
+							<Form.Label><b>Género</b></Form.Label>
+							<Form.Select
+								className={errors.gender ? "form-error" : ""}
+								name="gender"
+							>
+								<option value="Masculino">Masculino</option>
+								<option value="Feminino">Feminino</option>
+								<option value="Outro">Outro</option>
+								<option value="Prefiro não dizer">Prefiro não dizer</option>
+							</Form.Select>
 						</Form.Group>
 					</Col>
 				</Row>

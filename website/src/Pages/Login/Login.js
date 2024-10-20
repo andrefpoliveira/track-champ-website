@@ -29,10 +29,10 @@ export default function LoginPage() {
 		let validationErrors = validateForm(formDataObj);
 
 		if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            setIsLoading(false);
-            return;
-        }
+			setErrors(validationErrors);
+			setIsLoading(false);
+			return;
+		}
 
 		setErrors({});  // Clear errors if no validation issues
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
 			let info = result['info'];
 
 			let profile = new Profile(
-				info['account_id'],
+				info['id'],
 				info['name'],
 				info['profile_image']
 			);
@@ -56,21 +56,21 @@ export default function LoginPage() {
 	}
 
 	const validateForm = (form) => {
-        let validationErrors = {};
+		let validationErrors = {};
 
 		let email = form.email.trim();
 		let password = form.password.trim();
 
-        if (!email) {
-            validationErrors.email = "O email é obrigatório.";
-        }
+		if (!email) {
+			validationErrors.email = "O email é obrigatório.";
+		}
 
-        if (!password) {
-            validationErrors.password = "A password é obrigatória.";
-        }
+		if (!password) {
+			validationErrors.password = "A password é obrigatória.";
+		}
 
-        return validationErrors;
-    };
+		return validationErrors;
+	};
 
 	return (
 		<div id="login-page">

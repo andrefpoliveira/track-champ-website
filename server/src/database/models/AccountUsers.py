@@ -5,7 +5,8 @@ class AccountUsers(db.Model):
 	__tablename__ = 'acc_users'
 
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	name = db.Column(db.String(100), nullable=False)
+	firstName = db.Column(db.String(50), nullable=False)
+	lastName = db.Column(db.String(50), nullable=False)
 	email = db.Column(db.String(50), nullable=False, unique=True)
 	password = db.Column(db.String(64), nullable=False)
 	salt = db.Column(db.String(30), nullable=False)

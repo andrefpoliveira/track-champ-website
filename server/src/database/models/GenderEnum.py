@@ -9,6 +9,6 @@ class GenderEnum(Enum):
 
 def match_gender(value: str) -> GenderEnum:
     for gender in GenderEnum:
-        if gender.lower() == value.lower():
+        if gender.value.lower() == value.lower():
             return gender
     raise ValueError('This should never happen')
