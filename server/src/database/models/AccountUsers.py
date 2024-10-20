@@ -5,6 +5,7 @@ class AccountUsers(db.Model):
 	__tablename__ = 'acc_users'
 
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	username = db.Column(db.String(110), nullable=False, unique=True)
 	firstName = db.Column(db.String(50), nullable=False)
 	lastName = db.Column(db.String(50), nullable=False)
 	email = db.Column(db.String(50), nullable=False, unique=True)

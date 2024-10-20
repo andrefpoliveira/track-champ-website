@@ -4,9 +4,22 @@ from flask import request, jsonify
 from http import HTTPStatus
 
 from src.api.auth.utils.security import encrypt_password
+from src.api.auth.utils.codes import generate_digit_code
+
 from src.database.models.GenderEnum import match_gender
 from src.database.wrapper import authentication
 from src.validator.validator import Validator
+
+def generate_username(first_name: str, last_name: str) -> str:
+	"""
+	Generates a username from the first and last name
+	"""
+	username = None
+
+	while username is None or authentication.username_exists(username):
+		username = first_name.lower() + last_name.lower() + generate_digit_code(4)
+	
+	return username
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -29,9 +42,10 @@ def register():
 		return jsonify({ 'error': 'Este email já tem uma conta associada.', 'field': 'email' }), HTTPStatus.CONFLICT
 	
 	authentication.create_new_user(
-		first_name=payload['firstName'],
-		last_name=payload['lastName'],
-		email=payload['email'],
+		username=generate_username(payload['firstName'], payload['lastName']),
+		first_name=payload['firstName'].strip(),
+		last_name=payload['lastName'].strip(),
+		email=payload['email'].strip(),
 		password=password,
 		salt=salt,
 		birthday=payload['date'],

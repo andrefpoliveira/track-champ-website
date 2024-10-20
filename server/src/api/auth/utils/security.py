@@ -1,7 +1,6 @@
 from typing import Tuple
 
 import bcrypt
-import secrets
 
 def encrypt_password(password: str, salt: str = None) -> Tuple[str]:
 	"""
@@ -22,15 +21,3 @@ def encrypt_password(password: str, salt: str = None) -> Tuple[str]:
 		
 	return bytes.decode(bcrypt.hashpw(bytes(password, 'utf-8'), salt)), bytes.decode(salt)
 
-
-def generate_verification_code(length: int) -> str:
-	"""
-	Generates a cryptographically secure x-digit verification code.
-
-	Parameters:
-		length (int): The length of the verification code
-
-	Returns:
-		(str): The verification code with size length
-	"""
-	return ''.join(str(secrets.choice(range(10))) for i in range(length))

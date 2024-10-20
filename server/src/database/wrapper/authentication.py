@@ -8,12 +8,13 @@ def account_exists(email: str) -> bool:
 		return AccountUsers.query.filter_by(email=email).first() is not None
 		
 
-def create_new_user(first_name: str, last_name: str, email: str, password: str, salt: str, birthday: str, gender: GenderEnum):
+def create_new_user(username: str, first_name: str, last_name: str, email: str, password: str, salt: str, birthday: str, gender: GenderEnum):
 	with app.app_context():
 		new_user = AccountUsers(
-			firstName=first_name.strip(),
-			lastName=last_name.strip(),
-			email=email.strip(),
+			username=username,
+			firstName=first_name,
+			lastName=last_name,
+			email=email,
 			password=password,
 			salt=salt,
 			birthday=birthday,
@@ -31,3 +32,8 @@ def get_salt(email: str) -> str:
 def login(email: str, password: str) -> AccountUsers:
 	with app.app_context():
 		return AccountUsers.query.filter_by(email=email, password=password).first()
+
+
+def username_exists(username: str) -> bool:
+	with app.app_context():
+		return AccountUsers.query.filter_by(username=username).first() is not None
