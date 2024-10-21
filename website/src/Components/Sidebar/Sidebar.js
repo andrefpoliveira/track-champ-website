@@ -1,6 +1,7 @@
 import './Sidebar.css';
 import React from "react";
 
+import { FaUser } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa";
 import { BsChevronBarLeft } from "react-icons/bs";
@@ -35,6 +36,11 @@ export default class Sidebar extends React.Component {
 
 				<hr />
 	
+				<div class="sidebar-item">
+					<FaUser />
+					<span>Perfil</span>
+				</div>
+
 				<div class="sidebar-item">
 					<FaUsers />
 					<span>Equipas</span>
