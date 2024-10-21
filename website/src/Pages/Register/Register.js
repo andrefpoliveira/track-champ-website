@@ -37,7 +37,7 @@ export default function RegisterPage() {
 		let result = await register(formDataObj);
 
 		if (result.success) {
-			navigate('/login');
+			navigate('/entrar');
 		}
 
 		setIsLoading(false);
@@ -186,7 +186,7 @@ export default function RegisterPage() {
 				</Row>
 
 				<Row className="form-free-row center-row">
-					<span>Já tem uma conta? <Link disabled={isLoading} to={'/login'}><b>Entrar</b></Link></span>
+					<span>Já tem uma conta? <Link disabled={isLoading} to={'/entrar'}><b>Entrar</b></Link></span>
 				</Row>
 			</Form>
 		</div>

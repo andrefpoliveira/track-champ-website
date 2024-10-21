@@ -28,7 +28,7 @@ class Header extends React.Component {
 													<span><b>{profile.getName()}</b></span>
 													<img className="profile-picture" src={profile.getProfileImage()} alt={profile.getName()} />
 												</div>
-												: <span><Link to={'login'}>Entrar</Link></span>
+												: <span><Link to={'/entrar'}>Entrar</Link></span>
 										}
 									</>
 								)}

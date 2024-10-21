@@ -126,7 +126,7 @@ export default function LoginPage() {
 				</Row>
 
 				<Row className="form-free-row center-row">
-					<span>Ainda não tens conta? <Link disabled={isLoading} to={'/register'}><b>Registar</b></Link></span>
+					<span>Ainda não tens conta? <Link disabled={isLoading} to={'/registar'}><b>Registar</b></Link></span>
 				</Row>
 			</Form>
 		</div>

@@ -3,6 +3,7 @@
 	flex-direction: column;
 	text-align: left;
 	padding-top: 0.1rem;
+	margin-right: 1rem;
 
 	width: fit-content;
 	height: calc(100vh - 47px);
@@ -17,9 +18,10 @@
 }
 
 .sidebar-item {
+	width: fit-content;
+	cursor: pointer;
 	display: block;
-	margin: 0.1rem 0rem;
-	padding: 0.5rem 1rem;
+	margin: 0.5rem 1rem;
 }
 
 #sidebar.opened .sidebar-item span {

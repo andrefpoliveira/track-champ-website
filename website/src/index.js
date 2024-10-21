@@ -14,6 +14,7 @@ import {
 import ErrorPage from './Pages/Error/Error';
 import LoginPage from './Pages/Login/Login';
 import RegisterPage from './Pages/Register/Register';
+import MyProfile from './Pages/MyProfile/MyProfile';
 
 import ExamplePage from './Pages/ExamplePage/ExamplePage';
 
@@ -23,11 +24,12 @@ const router = createBrowserRouter([
 		element: <App />,
 		errorElement: <ErrorPage />,
 		children: [
+			{ path: "/meu-perfil", element: <MyProfile /> },
 			{ path: "/example", element: <ExamplePage /> }
 		]
 	},
-	{ path: "/login", element: <LoginPage />, errorElement: <ErrorPage /> },
-	{ path: "/register", element: <RegisterPage />, errorElement: <ErrorPage /> },
+	{ path: "/entrar", element: <LoginPage />, errorElement: <ErrorPage /> },
+	{ path: "/registar", element: <RegisterPage />, errorElement: <ErrorPage /> },
 ]);
 
 const AppWrapper = () => {
