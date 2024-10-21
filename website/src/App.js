@@ -24,7 +24,10 @@ function App() {
 									<Sidebar />
 									<Outlet />
 								</div>
-								: <div>Some Information Here</div>
+								: <div id='unregistered-screen'>
+									<h2>Hey! Great to see you!</h2>
+									<h4>Soon...</h4>
+								</div>
 						}
 					</>
 				)}

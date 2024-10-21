@@ -1,16 +1,31 @@
 class Profile {
-	constructor(accountId, name, profileImage) {
-		this.name = name;
-		this.profileImage = profileImage;
+	constructor(accountId, username, name, birthday, gender, profileImage) {
 		this.accountId = accountId;
+		this.username = username;
+		this.name = name;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.profileImage = profileImage;
 	}
 
 	getAccountId() {
 		return this.accountId;
 	}
 
+	getUsername() {
+		return this.username;
+	}
+
 	getName() {
 		return this.name;
+	}
+
+	getBirthday() {
+		return this.birthday;
+	}
+
+	getGender() {
+		return this.gender;
 	}
 
 	getProfileImage() {

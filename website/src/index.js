@@ -15,6 +15,7 @@ import ErrorPage from './Pages/Error/Error';
 import LoginPage from './Pages/Login/Login';
 import RegisterPage from './Pages/Register/Register';
 import MyProfile from './Pages/MyProfile/MyProfile';
+import EditProfile from './Pages/EditProfile/EditProfile';
 
 import ExamplePage from './Pages/ExamplePage/ExamplePage';
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{ path: "/meu-perfil", element: <MyProfile /> },
+			{ path: "/editar-perfil", element: <EditProfile /> },
 			{ path: "/example", element: <ExamplePage /> }
 		]
 	},

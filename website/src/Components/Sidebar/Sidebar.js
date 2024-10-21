@@ -6,6 +6,7 @@ import { FaUsers } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa";
 import { BsChevronBarLeft } from "react-icons/bs";
 import { BsChevronBarRight } from "react-icons/bs";
+import { FaSignOutAlt } from "react-icons/fa";
 
 import { useNavigate } from 'react-router-dom';
 
@@ -45,6 +46,11 @@ export default function Sidebar() {
 			<div class="sidebar-item">
 				<FaChartLine />
 				<span>Resultados</span>
+			</div>
+
+			<div class="sidebar-item">
+				<FaSignOutAlt />
+				<span>Sair</span>
 			</div>
 		</div>
 	);

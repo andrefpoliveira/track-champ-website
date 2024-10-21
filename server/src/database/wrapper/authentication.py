@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from extension import app, db
 
 from src.database.models.AccountUsers import AccountUsers
@@ -8,7 +10,16 @@ def account_exists(email: str) -> bool:
 		return AccountUsers.query.filter_by(email=email).first() is not None
 		
 
-def create_new_user(username: str, first_name: str, last_name: str, email: str, password: str, salt: str, birthday: str, gender: GenderEnum):
+def create_new_user(
+	username: str,
+	first_name: str,
+	last_name: str,
+	email: str,
+	password: str,
+	salt: str,
+	birthday: str,
+	gender: GenderEnum
+):
 	with app.app_context():
 		new_user = AccountUsers(
 			username=username,
@@ -18,7 +29,8 @@ def create_new_user(username: str, first_name: str, last_name: str, email: str, 
 			password=password,
 			salt=salt,
 			birthday=birthday,
-			gender=gender
+			gender=gender,
+			createdIn=datetime.now(),
 		)
 		db.session.add(new_user)
 		db.session.commit()
@@ -32,6 +44,12 @@ def get_salt(email: str) -> str:
 def login(email: str, password: str) -> AccountUsers:
 	with app.app_context():
 		return AccountUsers.query.filter_by(email=email, password=password).first()
+	
+def update_last_login(user: AccountUsers) -> None:
+	with app.app_context():
+		db_user = AccountUsers.query.filter_by(id=user.id).first()
+		db_user.lastLogIn = datetime.now()
+		db.session.commit()
 
 
 def username_exists(username: str) -> bool:

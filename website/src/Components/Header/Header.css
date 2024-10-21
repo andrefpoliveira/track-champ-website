@@ -2,6 +2,7 @@
 	border-bottom: 1px solid #e0e0e0;
 	margin: 0px;
 	padding: 0px;
+	min-height: 55px;
 }
 
 .container {
@@ -9,15 +10,15 @@
 	margin: 0px 10px;
 }
 
-.profile-picture {
+.navbar .profile-picture {
 	margin-left: 0.5rem;
-	border-radius: 5px;
-	width: 30px;
-	height: 30px;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
 	border: 1px solid #000;
 }
 
-.profile-info {
+.navbar .profile-info {
 	display: flex;
 	align-items: center;
 }

@@ -15,5 +15,8 @@ class AccountUsers(db.Model):
 	gender = db.Column(db.Enum(GenderEnum), nullable=False)
 	profileImage = db.Column(db.String(50), nullable=True)
 
+	createdIn = db.Column(db.DateTime, nullable=False)
+	lastLogIn = db.Column(db.DateTime, nullable=True)
+
 	def __repr__(self):
 		return f'<AccountUsers {self.id} {self.name}>'

@@ -42,8 +42,11 @@ export default function LoginPage() {
 			let info = result['info'];
 
 			let profile = new Profile(
-				info['id'],
+				info['account_id'],
+				info['username'],
 				info['name'],
+				info['birthday'],
+				info['gender'],
 				info['profile_image']
 			);
 

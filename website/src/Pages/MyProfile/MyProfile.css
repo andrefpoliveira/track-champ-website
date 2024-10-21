@@ -1,0 +1,39 @@
+#profile-page {
+    padding-top: 1rem;
+}
+
+#profile-page .profile-picture {
+    width: 150px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+
+#profile-page #profile-header {
+    display: flex;
+}
+
+#profile-page #profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+#profile-page #profile-info .line,
+#profile-action-buttons button {
+    display: flex;
+	align-items: center;
+}
+
+#profile-page #profile-info .line svg {
+    margin-right: 1rem;
+}
+
+#profile-action-buttons svg {
+    margin-right: 0.5rem;
+}
+
+#profile-action-buttons {
+    margin-top: 0.5rem;
+}
