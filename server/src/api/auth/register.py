@@ -1,5 +1,6 @@
 from . import auth_bp
 import re
+from datetime import datetime
 from flask import request, jsonify
 from http import HTTPStatus
 
@@ -48,7 +49,7 @@ def register():
 		email=payload['email'].strip(),
 		password=password,
 		salt=salt,
-		birthday=payload['date'],
+		birthday=datetime.strptime(payload['date'], '%Y-%M-%d').date(),
 		gender=match_gender(payload['gender'])
 	)
 	
