@@ -38,6 +38,8 @@ export default function LoginPage() {
 
 		let result = await login(formDataObj);
 
+		setIsLoading(false);
+
 		if (result.success) {
 			let info = result['info'];
 
@@ -51,11 +53,13 @@ export default function LoginPage() {
 			);
 
 			setProfile(profile);
-
 			navigate('/');
+			return;
 		}
 
-		setIsLoading(false);
+		let error = {};
+		error[result.field] = result.error;
+		setErrors(error);
 	}
 
 	const validateForm = (form) => {

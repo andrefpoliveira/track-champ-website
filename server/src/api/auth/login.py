@@ -15,7 +15,7 @@ def login():
 	account_exists = authentication.account_exists(payload['email'])
 
 	if not account_exists:
-		return jsonify({ 'error': 'Account does not exist' }), HTTPStatus.UNAUTHORIZED
+		return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
 	salt = authentication.get_salt(payload['email'])
 	password, _ = encrypt_password(payload['password'], salt)
@@ -23,7 +23,7 @@ def login():
 	user = authentication.login(payload['email'], password)
 	
 	if user is None:
-		return jsonify({ 'error': 'Invalid password' }), HTTPStatus.UNAUTHORIZED
+		return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 	
 	authentication.update_last_login(user)
 	

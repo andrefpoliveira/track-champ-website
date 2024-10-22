@@ -35,12 +35,18 @@ export default function RegisterPage() {
 		setErrors({});  // Clear errors if no validation issues
 
 		let result = await register(formDataObj);
+		
+		setIsLoading(false);
 
 		if (result.success) {
 			navigate('/entrar');
+			return;
 		}
-
-		setIsLoading(false);
+		
+		let error = {};
+		error[result.field] = result.error;
+		setErrors(error);
+		
 	}
 
 	const validateForm = (form) => {
