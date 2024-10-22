@@ -2,18 +2,230 @@ import './EditProfile.css';
 import React from "react";
 
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import { FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
+import { update } from '../../Logic/Requests/requests';
+import Profile from "../../Logic/Profile";
 import AuthContext from '../../Logic/AppContext';
+import ChangeImageModal from '../../Components/Modal/ChangeImageModal/ChangeImageModal'
+
 
 export default function EditProfile() {
+	const { profile, setProfile } = React.useContext(AuthContext);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [errors, setErrors] = React.useState({});
+	const [modalShow, setModalShow] = React.useState(false);
+	const [profileImage, setProfileImage] = React.useState(profile.getProfileImage());
+	const [imageSet, setImageSet] = React.useState(!profile.getProfileImage().includes('/defaultProfile'))
+	const navigate = useNavigate();
+
+	const handleSubmit = async (e) => {
+		setIsLoading(true);
+
+		e.preventDefault();
+
+		const formData = new FormData(e.target);
+		const formDataObj = Object.fromEntries(formData.entries());
+
+		let validationErrors = validateForm(formDataObj);
+
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			setIsLoading(false);
+			return;
+		}
+
+		setErrors({});  // Clear errors if no validation issues
+
+		formDataObj['profileImage'] = profileImage.includes('/defaultProfile') ? null : profileImage;
+		formDataObj['id'] = profile.getId();
+		let result = await update(formDataObj);
+		
+		setIsLoading(false);
+
+		if (result.success) {
+			alert('Works');
+			let info = result.info;
+			let profile = new Profile(info);
+			setProfile(profile)
+			navigate('/meu-perfil')
+			return;
+		}
+		
+		let error = {};
+		error[result.field] = result.error;
+		setErrors(error);
+		
+	}
+
+	const validateForm = (form) => {
+		let validationErrors = {};
+
+		let firstName = form.firstName.trim();
+		let lastName = form.lastName.trim();
+		let username = form.username.trim();
+		let email = form.email.trim();
+		let date = form.date.trim();
+
+		// Custom validation for each field
+		if (!firstName) {
+			validationErrors.firstName = "O nome próprio é obrigatório.";
+		}
+
+		if (!lastName) {
+			validationErrors.lastName = "O apelido é obrigatório.";
+		}
+
+		if (!username) {
+			validationErrors.username = "O nome de utilizador é obrigatório.";
+		}
+
+		if (!email) {
+			validationErrors.email = "O email é obrigatório.";
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+			validationErrors.email = "O formato de email é inválido.";
+		}
+
+		if (!date) {
+			validationErrors.date = "A data é obrigatória.";
+		}
+
+		return validationErrors;
+	};
+
 	return (
 		<AuthContext.Consumer>
-			{({ profile, setProfile }) => (
+			{({ profile }) => (
 				<div id='edit-profile-page' className='page'>
-					<img className="profile-picture" src={profile.getProfileImage()} alt={profile.getName()} />
+					<ChangeImageModal
+						show={modalShow}
+						onHide={() => setModalShow(false)}
+						existsAlready = {imageSet}
+
+						choosePhoto={(img) => {
+							console.log(img);
+							setImageSet(true);
+							setProfileImage(img);
+							setModalShow(false);
+						}}
+						deletePhoto={() => {
+							setProfileImage('/images/defaultProfile.jpg');
+							setImageSet(false);
+							setModalShow(false);
+						}}
+					/>
+
+					<div className='header'>
+						<h2>Editar Perfil</h2>
+						<img
+							className="profile-picture"
+							src={profileImage}
+							alt={profile.getName()}
+							onClick={() => setModalShow(true)}
+						/>
+					</div>
 					
+					<Form
+						onSubmit={handleSubmit}
+					>
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="formFirstName">
+									<Form.Label><b>Nome Próprio</b></Form.Label>
+									<Form.Control
+										className={errors.firstName ? "form-error" : ""}
+										type="text"
+										name="firstName"
+										defaultValue={profile.getFirstName()}
+									/>
+									{errors.firstName && <p className="form-error-label">{errors.firstName}</p>}
+								</Form.Group>
+							</Col>
+							<Col>
+								<Form.Group className="mb-3" controlId="formLastName">
+									<Form.Label><b>Apelido</b></Form.Label>
+									<Form.Control
+										className={errors.lastName ? "form-error" : ""}
+										type="text"
+										name="lastName"
+										defaultValue={profile.getLastName()}
+									/>
+									{errors.lastName && <p className="form-error-label">{errors.lastName}</p>}
+								</Form.Group>
+							</Col>
+						</Row>
+
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="formUsername">
+									<Form.Label><b>Nome de Utilizador</b></Form.Label>
+									<Form.Control
+										className={errors.username ? "form-error" : ""}
+										type="text"
+										name="username"
+										defaultValue={profile.getUsername()}
+									/>
+									{errors.username && <p className="form-error-label">{errors.username}</p>}
+								</Form.Group>
+							</Col>
+							<Col>
+								<Form.Group className="mb-3" controlId="formEmail">
+									<Form.Label><b>Email</b></Form.Label>
+									<Form.Control
+										className={errors.email ? "form-error" : ""}
+										type="email"
+										name="email"
+										defaultValue={profile.getEmail()}
+									/>
+									{errors.email && <p className="form-error-label">{errors.email}</p>}
+								</Form.Group>
+							</Col>
+						</Row>
+
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="formDate">
+									<Form.Label><b>Data de Nascimento</b></Form.Label>
+									<Form.Control
+										className={errors.date ? "form-error" : ""}
+										type="date"
+										name="date"
+										defaultValue={new Date(profile.getBirthday()).toISOString().split('T')[0]}
+									/>
+									{errors.date && <p className="form-error-label">{errors.date}</p>}
+								</Form.Group>
+							</Col>
+							<Col>
+								<Form.Group className="mb-3" controlId="formGender">
+									<Form.Label><b>Género</b></Form.Label>
+									<Form.Select
+										className={errors.gender ? "form-error" : ""}
+										name="gender"
+										defaultValue={profile.getGender() || ""}
+									>
+										<option value="Masculino">Masculino</option>
+										<option value="Feminino">Feminino</option>
+										<option value="Outro">Outro</option>
+										<option value="Prefiro não dizer">Prefiro não dizer</option>
+									</Form.Select>
+								</Form.Group>
+							</Col>
+						</Row>
+
+						<Row className="form-free-row mb-2">
+							<Button
+								disabled={isLoading}
+								type="submit"
+							>
+								{isLoading ? 'Aguarda...' : 'Atualizar conta'}
+							</Button>
+						</Row>
+					</Form>
+
 				</div>
 			)}
 		</AuthContext.Consumer>

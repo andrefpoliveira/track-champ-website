@@ -17,7 +17,7 @@ def create_new_user(
 	email: str,
 	password: str,
 	salt: str,
-	birthday: str,
+	birthday: datetime,
 	gender: GenderEnum
 ):
 	with app.app_context():
@@ -33,6 +33,22 @@ def create_new_user(
 			createdIn=datetime.now(),
 		)
 		db.session.add(new_user)
+		db.session.commit()
+
+
+def get_user(id: int):
+	with app.app_context():
+		return AccountUsers.query.filter_by(id=id).first()
+
+
+def update_user(payload: dict):
+	with app.app_context():
+		user = AccountUsers.query.filter_by(id = payload['id']).first()
+
+		for k, v in payload.items():
+			if k == 'id': continue
+			setattr(user, k, v)
+
 		db.session.commit()
 
 

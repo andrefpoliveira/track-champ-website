@@ -18,6 +18,7 @@ class Profile {
 	getFirstName() { return this.firstName; }
 	getLastName() { return this.lastName; }
 	getName() { return this.firstName + ' ' + this.lastName; }
+	getEmail() { return this.email; }
 	getBirthday() { return this.birthday; }
 	getGender() { return this.gender; }
 	getProfileImage() { return this.profileImage || '/images/defaultProfile.jpg'; }

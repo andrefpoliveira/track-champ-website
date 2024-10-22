@@ -4,6 +4,7 @@ from http import HTTPStatus
 from extension import app, db
 
 from src.api.auth import auth_bp
+from src.api.profile import profile_bp
 from src.logging.setup import setup_login
 
 setup_login(app)
@@ -32,6 +33,7 @@ with app.app_context():
 	db.create_all()
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(profile_bp, url_prefix='/profile')
 
 if __name__ == "__main__":
 	app.run()

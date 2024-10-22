@@ -1,0 +1,18 @@
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body button:nth-child(2) {
+    margin-top: 1rem;
+}
+
+.modal-body button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body button svg {
+    margin-right: 0.5rem;
+}

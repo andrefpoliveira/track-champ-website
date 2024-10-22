@@ -29,6 +29,14 @@ class Validator:
 	
 
 	@staticmethod
+	def username(username: str) -> Tuple[Union[bool, str]]:
+		if Validator.is_empty(username):
+			return False, "O nome de utilizador é obrigatório."
+		
+		return True, ""
+	
+
+	@staticmethod
 	def email(email: str) -> Tuple[Union[bool, str]]:
 		if Validator.is_empty(email):
 			return False, "O email é obrigatório."
