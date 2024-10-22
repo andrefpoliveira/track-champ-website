@@ -43,14 +43,7 @@ export default function LoginPage() {
 		if (result.success) {
 			let info = result['info'];
 
-			let profile = new Profile(
-				info['account_id'],
-				info['username'],
-				info['name'],
-				info['birthday'],
-				info['gender'],
-				info['profile_image']
-			);
+			let profile = new Profile(info);
 
 			setProfile(profile);
 			navigate('/');

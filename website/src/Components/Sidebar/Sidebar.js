@@ -17,7 +17,7 @@ export default function Sidebar() {
 	return (
 		<div id="sidebar" className={open ? 'opened' : 'closed'}>
 			<div
-				class="sidebar-item toggle-button"
+				className="sidebar-item toggle-button"
 				onClick={() => setOpen(!open)}
 			>
 				{
@@ -31,24 +31,24 @@ export default function Sidebar() {
 			<hr />
 
 			<div
-				class="sidebar-item"
+				className="sidebar-item"
 				onClick={() => navigate('/meu-perfil')}
 			>
 				<FaUser />
 				<span>Perfil</span>
 			</div>
 
-			<div class="sidebar-item">
+			<div className="sidebar-item">
 				<FaUsers />
 				<span>Equipas</span>
 			</div>
 
-			<div class="sidebar-item">
+			<div className="sidebar-item">
 				<FaChartLine />
 				<span>Resultados</span>
 			</div>
 
-			<div class="sidebar-item">
+			<div className="sidebar-item">
 				<FaSignOutAlt />
 				<span>Sair</span>
 			</div>

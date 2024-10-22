@@ -1,36 +1,29 @@
 class Profile {
-	constructor(accountId, username, name, birthday, gender, profileImage) {
-		this.accountId = accountId;
-		this.username = username;
-		this.name = name;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.profileImage = profileImage;
+	constructor(info) {
+		this.id = info.id;
+		this.username = info.username;
+		this.firstName = info.firstName;
+		this.lastName = info.lastName;
+		this.email = info.email;
+		this.birthday = info.birthday;
+		this.gender = info.gender;
+		this.profileImage = info.profileImage;
+		this.activated = info.activated;
+		this.createdIn = info.createdIn;
+		this.lastLogIn = info.lastLogIn;
 	}
 
-	getAccountId() {
-		return this.accountId;
-	}
-
-	getUsername() {
-		return this.username;
-	}
-
-	getName() {
-		return this.name;
-	}
-
-	getBirthday() {
-		return this.birthday;
-	}
-
-	getGender() {
-		return this.gender;
-	}
-
-	getProfileImage() {
-		return this.profileImage || 'https://i.pinimg.com/736x/dc/9c/61/dc9c614e3007080a5aff36aebb949474.jpg';
-	}
+	getId() { return this.id; }
+	getUsername() { return this.username; }
+	getFirstName() { return this.firstName; }
+	getLastName() { return this.lastName; }
+	getName() { return this.firstName + ' ' + this.lastName; }
+	getBirthday() { return this.birthday; }
+	getGender() { return this.gender; }
+	getProfileImage() { return this.profileImage || '/images/defaultProfile.jpg'; }
+	getActivatedStatus() { return this.activated; }
+	getCreatedTime() { return this.createdIn; }
+	getLastLogin() { return this.lastLogIn; }
 }
 
 export default Profile;

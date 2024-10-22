@@ -27,14 +27,9 @@ def login():
 	
 	authentication.update_last_login(user)
 	
+	info = user.to_json()
+
 	return jsonify({
 		'success': True,
-		'info': {
-			'account_id': user.id,
-			'username': user.username,
-			'name': user.firstName + ' ' + user.lastName,
-			'birthday': user.birthday,
-			'gender': user.gender.value,
-			'profile_image': user.profileImage
-		}
+		'info': info
 	}), HTTPStatus.OK

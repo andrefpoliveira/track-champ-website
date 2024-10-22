@@ -1,6 +1,8 @@
 from extension import db
 from src.database.models.GenderEnum import GenderEnum
 
+from flask import jsonify
+
 class AccountUsers(db.Model):
 	__tablename__ = 'acc_users'
 
@@ -14,9 +16,31 @@ class AccountUsers(db.Model):
 	birthday = db.Column(db.Date, nullable=False)
 	gender = db.Column(db.Enum(GenderEnum), nullable=False)
 	profileImage = db.Column(db.String(50), nullable=True)
+	activated = db.Column(db.Boolean, nullable=False, default=False)
 
 	createdIn = db.Column(db.DateTime, nullable=False)
 	lastLogIn = db.Column(db.DateTime, nullable=True)
 
 	def __repr__(self):
 		return f'<AccountUsers {self.id} {self.name}>'
+	
+	def to_json(self, excuded_fields = []):
+		info = {
+			'id': self.id,
+			'username': self.username,
+			'firstName': self.firstName,
+			'lastName': self.lastName,
+			'email': self.email,
+			'birthday': self.birthday,
+			'gender': self.gender.value,
+			'profileImage': self.profileImage,
+			'activated': self.activated,
+			'createdIn': self.createdIn,
+			'lastLogIn': self.lastLogIn
+		}
+
+		for field in excuded_fields:
+			if field in info:
+				del info[field]
+
+		return info
