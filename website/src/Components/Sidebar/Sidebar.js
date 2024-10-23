@@ -9,8 +9,10 @@ import { BsChevronBarRight } from "react-icons/bs";
 import { FaSignOutAlt } from "react-icons/fa";
 
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../Logic/AppContext';
 
 export default function Sidebar() {
+	const { deleteProfile } = React.useContext(AuthContext);
 	const [open, setOpen] = React.useState(true);
 	const navigate = useNavigate();
 
@@ -48,7 +50,13 @@ export default function Sidebar() {
 				<span>Resultados</span>
 			</div>
 
-			<div className="sidebar-item">
+			<div
+				className="sidebar-item"
+				onClick={() => {
+					deleteProfile();
+					navigate('/');
+				}}
+			>
 				<FaSignOutAlt />
 				<span>Sair</span>
 			</div>
