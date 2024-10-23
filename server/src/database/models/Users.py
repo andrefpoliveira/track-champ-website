@@ -1,9 +1,7 @@
 from extension import db
 from src.database.models.GenderEnum import GenderEnum
 
-from flask import jsonify
-
-class AccountUsers(db.Model):
+class Users(db.Model):
 	__tablename__ = 'acc_users'
 
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -22,7 +20,7 @@ class AccountUsers(db.Model):
 	lastLogIn = db.Column(db.DateTime, nullable=True)
 
 	def __repr__(self):
-		return f'<AccountUsers {self.id} {self.name}>'
+		return f'<User {self.id} {self.name} {self.username} {self.email}>'
 	
 	def to_json(self, excuded_fields = []):
 		info = {

@@ -2,12 +2,12 @@ from datetime import datetime
 
 from extension import app, db
 
-from src.database.models.AccountUsers import AccountUsers
+from src.database.models.Users import Users
 from src.database.models.GenderEnum import GenderEnum
 
 def account_exists(email: str) -> bool:
 	with app.app_context():
-		return AccountUsers.query.filter_by(email=email).first() is not None
+		return Users.query.filter_by(email=email).first() is not None
 		
 
 def create_new_user(
@@ -21,7 +21,7 @@ def create_new_user(
 	gender: GenderEnum
 ):
 	with app.app_context():
-		new_user = AccountUsers(
+		new_user = Users(
 			username=username,
 			firstName=first_name,
 			lastName=last_name,
@@ -38,12 +38,12 @@ def create_new_user(
 
 def get_user(id: int):
 	with app.app_context():
-		return AccountUsers.query.filter_by(id=id).first()
+		return Users.query.filter_by(id=id).first()
 
 
 def update_user(payload: dict):
 	with app.app_context():
-		user = AccountUsers.query.filter_by(id = payload['id']).first()
+		user = Users.query.filter_by(id = payload['id']).first()
 
 		for k, v in payload.items():
 			if k == 'id': continue
@@ -54,20 +54,20 @@ def update_user(payload: dict):
 
 def get_salt(email: str) -> str:
 	with app.app_context():
-		return AccountUsers.query.filter_by(email=email).first().salt
+		return Users.query.filter_by(email=email).first().salt
 
 
-def login(email: str, password: str) -> AccountUsers:
+def login(email: str, password: str) -> Users:
 	with app.app_context():
-		return AccountUsers.query.filter_by(email=email, password=password).first()
+		return Users.query.filter_by(email=email, password=password).first()
 	
-def update_last_login(user: AccountUsers) -> None:
+def update_last_login(user: Users) -> None:
 	with app.app_context():
-		db_user = AccountUsers.query.filter_by(id=user.id).first()
+		db_user = Users.query.filter_by(id=user.id).first()
 		db_user.lastLogIn = datetime.now()
 		db.session.commit()
 
 
 def username_exists(username: str) -> bool:
 	with app.app_context():
-		return AccountUsers.query.filter_by(username=username).first() is not None
+		return Users.query.filter_by(username=username).first() is not None
