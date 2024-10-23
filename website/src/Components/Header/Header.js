@@ -9,36 +9,27 @@ import { Link } from 'react-router-dom';
 
 import AuthContext from '../../Logic/AppContext';
 
-class Header extends React.Component {
+export default function Header() {
+	const { user } = React.useContext(AuthContext);
 
-	render() {
-		return (
-			<Navbar>
-				<Container>
-					{/* <Navbar.Brand href="#home">Navbar with text</Navbar.Brand> */}
-					<Navbar.Toggle />
-					<Navbar.Collapse className="justify-content-end">
-						<Navbar.Text>
-							<AuthContext.Consumer>
-								{({ profile, setProfile }) => (
-									<>
-										{
-											profile
-												? <div className='profile-info'>
-													<span><b>{profile.getName()}</b></span>
-													<img className="profile-picture" src={profile.getProfileImage()} alt={profile.getName()} />
-												</div>
-												: <span><Link to={'/entrar'}>Entrar</Link></span>
-										}
-									</>
-								)}
-							</AuthContext.Consumer>
-						</Navbar.Text>
-					</Navbar.Collapse>
-				</Container>
-			</Navbar>
-		);
-	}
+	return (
+		<Navbar>
+			<Container>
+				{/* <Navbar.Brand href="#home">Navbar with text</Navbar.Brand> */}
+				<Navbar.Toggle />
+				<Navbar.Collapse className="justify-content-end">
+					<Navbar.Text>
+						{
+							user
+							? <div className='profile-info'>
+								<span><b>{user.getName()}</b></span>
+								<img className="profile-picture" src={user.getProfileImage()} alt={user.getName()} />
+							</div>
+							: <span><Link to={'/entrar'}>Entrar</Link></span> 
+						}
+					</Navbar.Text>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
+	);
 }
-
-export default Header;

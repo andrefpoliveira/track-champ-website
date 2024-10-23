@@ -9,13 +9,12 @@ import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../../Logic/Requests/requests";
-import Profile from "../../Logic/Profile";
 import AuthContext from "../../Logic/AppContext";
 
 export default function LoginPage() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
-	const { setProfile } = React.useContext(AuthContext);
+	const { storeProfile } = React.useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -42,10 +41,7 @@ export default function LoginPage() {
 
 		if (result.success) {
 			let info = result['info'];
-
-			let profile = new Profile(info);
-
-			setProfile(profile);
+			storeProfile(info);
 			navigate('/');
 			return;
 		}
