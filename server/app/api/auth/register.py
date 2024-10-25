@@ -4,12 +4,12 @@ from datetime import datetime
 from flask import request, jsonify
 from http import HTTPStatus
 
-from src.api.auth.utils.security import encrypt_password
-from src.api.auth.utils.codes import generate_digit_code
+from app.api.auth.utils.security import encrypt_password
+from app.api.auth.utils.codes import generate_digit_code
 
-from src.database.models.GenderEnum import match_gender
-from src.database.wrapper import authentication
-from src.validator.validator import Validator
+from app.database.models.GenderEnum import match_gender
+from app.database.wrapper import authentication
+from app.validator.validator import Validator
 
 def generate_username(first_name: str, last_name: str) -> str:
 	"""

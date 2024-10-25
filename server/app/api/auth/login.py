@@ -2,8 +2,8 @@ from . import auth_bp
 from flask import request, jsonify
 from http import HTTPStatus
 
-from src.api.auth.utils.security import encrypt_password
-from src.database.wrapper import authentication
+from app.api.auth.utils.security import encrypt_password
+from app.database.wrapper import authentication
 
 @auth_bp.route('/login', methods=['POST'])
 def login():

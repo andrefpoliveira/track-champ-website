@@ -101,7 +101,7 @@ export default function LoginPage() {
 					</Col>
 				</Row>
 
-				<Row className="mb-3">
+				{/* <Row className="mb-3">
 					<Col>
 						<Form.Group controlId="formRemember">
 							<Form.Check type="checkbox" label="Lembrar-me" />
@@ -110,7 +110,7 @@ export default function LoginPage() {
 					<Col className="text-right">
 						<Link to={'/forgot-password'}>Esqueci-me da password</Link>
 					</Col>
-				</Row>
+				</Row> */}
 
 				<Row className="form-free-row mb-2">
 					<Button

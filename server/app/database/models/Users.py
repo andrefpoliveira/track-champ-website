@@ -1,5 +1,5 @@
 from extension import db
-from src.database.models.GenderEnum import GenderEnum
+from app.database.models.GenderEnum import GenderEnum
 
 class Users(db.Model):
 	__tablename__ = 'acc_users'

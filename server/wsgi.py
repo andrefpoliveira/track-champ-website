@@ -3,9 +3,9 @@ from http import HTTPStatus
 
 from extension import app, db
 
-from src.api.auth import auth_bp
-from src.api.profile import profile_bp
-from src.logging.setup import setup_login
+from app.api.auth import auth_bp
+from app.api.profile import profile_bp
+from app.logging.setup import setup_login
 
 setup_login(app)
 

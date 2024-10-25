@@ -3,10 +3,10 @@ import base64, os, re
 from flask import request, jsonify
 from http import HTTPStatus
 
-from src.database.wrapper import authentication
-from src.validator.validator import Validator
+from app.database.wrapper import authentication
+from app.validator.validator import Validator
 
-from src.database.models.GenderEnum import match_gender
+from app.database.models.GenderEnum import match_gender
 
 @profile_bp.route('/update', methods=['POST'])
 def update():

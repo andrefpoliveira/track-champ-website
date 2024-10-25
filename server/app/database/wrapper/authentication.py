@@ -2,8 +2,8 @@ from datetime import datetime
 
 from extension import app, db
 
-from src.database.models.Users import Users
-from src.database.models.GenderEnum import GenderEnum
+from app.database.models.Users import Users
+from app.database.models.GenderEnum import GenderEnum
 
 def account_exists(email: str) -> bool:
 	with app.app_context():

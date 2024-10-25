@@ -2,7 +2,7 @@ from typing import Tuple
 from typing import Union
 import re
 
-from src.database.models.GenderEnum import GenderEnum, match_gender
+from app.database.models.GenderEnum import GenderEnum, match_gender
 
 class Validator:
 	# GLOBAL METHODS
