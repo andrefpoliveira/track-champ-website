@@ -5,12 +5,14 @@ async function makeRequest(
 ) {
 	const headers = {
 		'Content-Type': 'application/json',
+		'Access-Control-Allow-Credentials': true
 	};
 
 	const options = {
 		method,
 		headers,
 	};
+	options.credentials = 'include';
 
 	if (data) {
 		options.body = JSON.stringify(data);
