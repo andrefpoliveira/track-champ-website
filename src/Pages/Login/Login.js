@@ -10,15 +10,18 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../../Logic/Requests/requests";
 import AuthContext from "../../Logic/AppContext";
+import ToastContext from "../../Logic/ToastContext";
 
 export default function LoginPage() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
 	const { user, storeProfile } = React.useContext(AuthContext);
+	const { showToast } = React.useContext(ToastContext);
 	const navigate = useNavigate();
 
 	React.useLayoutEffect(() => {
 		if (user !== null) {
+			showToast('Já tens uma sessão iniciada', 'primary');
 			navigate('/')
 		}
 	})

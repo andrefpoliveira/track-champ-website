@@ -10,15 +10,19 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { register } from "../../Logic/Requests/requests";
 import AuthContext from "../../Logic/AppContext";
+import ToastContext from "../../Logic/ToastContext";
 
 export default function RegisterPage() {
+	const { user } = React.useContext(AuthContext);
+	const { showToast } = React.useContext(ToastContext);
+
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
-	const { user } = React.useContext(AuthContext);
 	const navigate = useNavigate();
 
 	React.useLayoutEffect(() => {
 		if (user !== null) {
+			showToast('Já tens uma sessão iniciada', 'primary');
 			navigate('/')
 		}
 	})
@@ -46,6 +50,7 @@ export default function RegisterPage() {
 		setIsLoading(false);
 
 		if (result.success) {
+			showToast('Conta criada com sucesso');
 			navigate('/entrar');
 			return;
 		}
