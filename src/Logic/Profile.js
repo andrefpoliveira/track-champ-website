@@ -2,8 +2,8 @@ class Profile {
 	constructor(info) {
 		this.id = info.id;
 		this.username = info.username;
-		this.firstName = info.firstName;
-		this.lastName = info.lastName;
+		this.firstName = info.first_name;
+		this.lastName = info.last_name;
 		this.email = info.email;
 		this.birthday = info.birthday;
 		this.gender = info.gender;
