@@ -11,10 +11,21 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../Logic/AppContext';
 
+import { logout } from '../../Logic/Requests/requests';
+
 export default function Sidebar() {
 	const { deleteProfile } = React.useContext(AuthContext);
 	const [open, setOpen] = React.useState(true);
 	const navigate = useNavigate();
+
+	const exit = async () => {
+		let info = await logout();
+
+		if (info.success) {
+			deleteProfile();
+			navigate('/');
+		}
+	}
 
 	return (
 		<div id="sidebar" className={open ? 'opened' : 'closed'}>
@@ -53,8 +64,7 @@ export default function Sidebar() {
 			<div
 				className="sidebar-item"
 				onClick={() => {
-					deleteProfile();
-					navigate('/');
+					exit();
 				}}
 			>
 				<FaSignOutAlt />

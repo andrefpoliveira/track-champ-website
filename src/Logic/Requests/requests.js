@@ -3,16 +3,14 @@ async function makeRequest(
 	method = 'GET',
 	data = null,
 ) {
-	const headers = {
-		'Content-Type': 'application/json',
-	};
+	const headers = data === null ? {} : { 'Content-Type': 'application/json' };
 
 	const options = {
 		method,
 		credentials: 'include',
 		headers,
 	};
-
+	
 	if (data) {
 		options.body = JSON.stringify(data);
 	}
@@ -24,26 +22,26 @@ async function makeRequest(
 	return responseData;
 }
 
-async function register(payload) {
+export async function register(payload) {
 	let url = process.env.REACT_APP_SERVER_URL + '/auth/register';
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
 
-async function login(payload) {
+export async function login(payload) {
 	let url = process.env.REACT_APP_SERVER_URL + '/auth/login';
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
 
-async function update(payload) {
-	let url = process.env.REACT_APP_SERVER_URL + '/profile/update';
-	const response = await makeRequest(url, 'POST', payload);
+export async function logout() {
+	let url = process.env.REACT_APP_SERVER_URL + '/auth/logout';
+	const response = await makeRequest(url, 'POST');
 	return response;
 }
 
-export {
-	register,
-	login,
-	update
+export async function update(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/profile/update';
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
 }
