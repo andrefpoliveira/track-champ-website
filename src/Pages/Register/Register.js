@@ -44,7 +44,9 @@ export default function RegisterPage() {
 		}
 		
 		let error = {};
-		error[result.field] = result.error;
+		result.errors.forEach(e => {
+			error[e.field] = e.error;
+		});
 		setErrors(error);
 		
 	}
