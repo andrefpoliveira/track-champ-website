@@ -44,9 +44,13 @@ export default function RegisterPage() {
 		}
 		
 		let error = {};
-		result.errors.forEach(e => {
-			error[e.field] = e.error;
-		});
+		if (result.errors !== undefined) {
+			result.errors.forEach(e => {
+				error[e.field] = e.error;
+			});
+		} else {
+			error[result.field] = result.error
+		}
 		setErrors(error);
 		
 	}
@@ -54,8 +58,8 @@ export default function RegisterPage() {
 	const validateForm = (form) => {
 		let validationErrors = {};
 
-		let firstName = form.firstName.trim();
-		let lastName = form.lastName.trim();
+		let firstName = form.first_name.trim();
+		let lastName = form.last_name.trim();
 		let email = form.email.trim();
 		let date = form.date.trim();
 		let password = form.password.trim();
@@ -110,7 +114,7 @@ export default function RegisterPage() {
 							<Form.Control
 								className={errors.firstName ? "form-error" : ""}
 								type="text"
-								name="firstName"
+								name="first_name"
 							/>
 							{errors.firstName && <p className="form-error-label">{errors.firstName}</p>}
 						</Form.Group>
@@ -121,7 +125,7 @@ export default function RegisterPage() {
 							<Form.Control
 								className={errors.lastName ? "form-error" : ""}
 								type="text"
-								name="lastName"
+								name="last_name"
 							/>
 							{errors.lastName && <p className="form-error-label">{errors.lastName}</p>}
 						</Form.Group>

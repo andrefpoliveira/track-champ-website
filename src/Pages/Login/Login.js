@@ -47,9 +47,13 @@ export default function LoginPage() {
 		}
 
 		let error = {};
-		result.errors.forEach(e => {
-			error[e.field] = e.error;
-		});
+		if (result.errors !== undefined) {
+			result.errors.forEach(e => {
+				error[e.field] = e.error;
+			});
+		} else {
+			error[result.field] = result.error
+		}
 		setErrors(error);
 	}
 
