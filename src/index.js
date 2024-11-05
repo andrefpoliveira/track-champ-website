@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './Logic/AppContext';
+import { ToastProvider } from './Logic/ToastContext';
 
 import './CSS/forms.css';
 
@@ -35,11 +36,11 @@ const router = createBrowserRouter([
 ]);
 
 const AppWrapper = () => {
-	// const [profile, setProfile] = React.useState(null);
-
 	return (
 		<AuthProvider>
-			<RouterProvider router={router} />
+			<ToastProvider>
+				<RouterProvider router={router} />
+			</ToastProvider>
 		</AuthProvider>
 	);
 };

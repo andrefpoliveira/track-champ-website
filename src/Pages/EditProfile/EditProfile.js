@@ -10,11 +10,14 @@ import { useNavigate } from "react-router-dom";
 
 import { update } from '../../Logic/Requests/requests';
 import AuthContext from '../../Logic/AppContext';
+import ToastContext from '../../Logic/ToastContext';
 import ChangeImageModal from '../../Components/Modal/ChangeImageModal/ChangeImageModal'
 
 
 export default function EditProfile() {
 	const { user, storeProfile } = React.useContext(AuthContext);
+	const { showToast } = React.useContext(ToastContext);
+
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
 	const [modalShow, setModalShow] = React.useState(false);
@@ -40,13 +43,14 @@ export default function EditProfile() {
 
 		setErrors({});  // Clear errors if no validation issues
 
-		formDataObj['profileImage'] = profileImage.includes('/defaultProfile') ? null : profileImage;
-		formDataObj['id'] = user.getId();
+		formDataObj['profile_image'] = profileImage.includes('/defaultProfile') ? null : profileImage;
 		let result = await update(formDataObj);
 		
 		setIsLoading(false);
 
 		if (result.success) {
+			showToast('Perfil atualizado com sucesso');
+
 			let info = result.info;
 			storeProfile(info);
 			navigate('/meu-perfil')
@@ -62,8 +66,8 @@ export default function EditProfile() {
 	const validateForm = (form) => {
 		let validationErrors = {};
 
-		let firstName = form.firstName.trim();
-		let lastName = form.lastName.trim();
+		let firstName = form.first_name.trim();
+		let lastName = form.last_name.trim();
 		let username = form.username.trim();
 		let email = form.email.trim();
 		let date = form.date.trim();
@@ -134,7 +138,7 @@ export default function EditProfile() {
 							<Form.Control
 								className={errors.firstName ? "form-error" : ""}
 								type="text"
-								name="firstName"
+								name="first_name"
 								defaultValue={user.getFirstName()}
 							/>
 							{errors.firstName && <p className="form-error-label">{errors.firstName}</p>}
@@ -146,7 +150,7 @@ export default function EditProfile() {
 							<Form.Control
 								className={errors.lastName ? "form-error" : ""}
 								type="text"
-								name="lastName"
+								name="last_name"
 								defaultValue={user.getLastName()}
 							/>
 							{errors.lastName && <p className="form-error-label">{errors.lastName}</p>}

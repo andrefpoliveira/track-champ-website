@@ -14,8 +14,14 @@ import AuthContext from "../../Logic/AppContext";
 export default function LoginPage() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
-	const { storeProfile } = React.useContext(AuthContext);
+	const { user, storeProfile } = React.useContext(AuthContext);
 	const navigate = useNavigate();
+
+	React.useLayoutEffect(() => {
+		if (user !== null) {
+			navigate('/')
+		}
+	})
 
 	const handleSubmit = async (e) => {
 		setIsLoading(true);
@@ -40,8 +46,11 @@ export default function LoginPage() {
 		setIsLoading(false);
 
 		if (result.success) {
-			let info = result['info'];
-			storeProfile(info);
+			if (result.statusCode === 200) {
+				let info = result['info'];
+				storeProfile(info);
+			}
+
 			navigate('/');
 			return;
 		}

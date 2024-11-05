@@ -4,11 +4,12 @@ async function makeRequest(
 	data = null,
 ) {
 	const headers = {
-		'Content-Type': 'application/json'
+		'Content-Type': 'application/json',
 	};
 
 	const options = {
 		method,
+		credentials: 'include',
 		headers,
 	};
 
@@ -18,6 +19,7 @@ async function makeRequest(
 
 	const response = await fetch(url, options);
 	const responseData = await response.json();
+	responseData.statusCode = response.status;
 
 	return responseData;
 }
