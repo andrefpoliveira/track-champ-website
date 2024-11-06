@@ -15,7 +15,7 @@ import ChangeImageModal from '../../Components/Modal/ChangeImageModal/ChangeImag
 
 
 export default function EditProfile() {
-	const { user, storeProfile } = React.useContext(AuthContext);
+	const { user, storeProfile, deleteProfile } = React.useContext(AuthContext);
 	const { showToast } = React.useContext(ToastContext);
 
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -47,6 +47,12 @@ export default function EditProfile() {
 		let result = await update(formDataObj);
 		
 		setIsLoading(false);
+
+		if (result.statusCode === 307) {
+			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+			deleteProfile();
+			navigate('/')
+		}
 
 		if (result.success) {
 			showToast('Perfil atualizado com sucesso');
