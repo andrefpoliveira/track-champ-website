@@ -125,7 +125,7 @@ export default function NewTeamModal(props) {
 					className="team-picture"
 					src={teamImage || '/images/defaultProfile.jpg'}
 					alt={'team image'}
-					onClick={() => setModalShow(true)}
+					onClick={() => setModalShow(false)}
 				/>
 
                 <Form

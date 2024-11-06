@@ -1,4 +1,4 @@
-import './Teams.css';
+import './TeamsList.css';
 import React from "react";
 
 import { Placeholder, Card, Row, Col, Button } from 'react-bootstrap';
@@ -37,7 +37,10 @@ function TeamPlaceholder() {
 
 function TeamCard(props) {
 	return (
-		<Card className='team-card'>
+		<Card
+			className='team-card'
+			onClick={() => props.navigateFunction(props.id)}
+		>
 			<Card.Img className="team-picture" src='/images/defaultProfile.jpg' alt='team profile' />
 			<div className='card-side-body'>
 				<Card.Title>{props.title}</Card.Title>
@@ -48,7 +51,7 @@ function TeamCard(props) {
 	)
 }
 
-export default function Teams() {
+export default function TeamsList() {
 	const { deleteProfile } = React.useContext(AuthContext);
 	const { showToast } = React.useContext(ToastContext);
 	const [loading, setLoading] = React.useState(true);
@@ -81,6 +84,10 @@ export default function Teams() {
 
 	function updateTeams() {
 		fetchTeams();
+	}
+
+	function navigateTeamPage(id) {
+		navigate(`/equipa/${id}`);
 	}
 
 	return (
@@ -121,9 +128,11 @@ export default function Teams() {
 									userTeams.map((team) => (
 										<Col key={team.id}>
 											<TeamCard
+												id={team.id}									
 												title={team.name}
 												description={team.description}
 												members={team.members}
+												navigateFunction={navigateTeamPage}
 											/>
 										</Col>
 									))

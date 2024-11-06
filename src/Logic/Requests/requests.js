@@ -57,3 +57,9 @@ export async function createTeam(payload) {
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
+
+export async function getTeam(id) {
+	let url = process.env.REACT_APP_SERVER_URL + `/team/get/${id}`;
+	const response = await makeRequest(url);
+	return response;
+}

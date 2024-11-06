@@ -18,7 +18,8 @@ import RegisterPage from './Pages/Register/Register';
 import MyProfile from './Pages/MyProfile/MyProfile';
 import EditProfile from './Pages/EditProfile/EditProfile';
 import ExamplePage from './Pages/ExamplePage/ExamplePage';
-import Teams from './Pages/Teams/Teams';
+import TeamsList from './Pages/TeamsList/TeamsList';
+import Team from './Pages/Team/Team';
 
 const router = createBrowserRouter([
 	{
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
 			{ path: "/meu-perfil", element: <MyProfile /> },
 			{ path: "/editar-perfil", element: <EditProfile /> },
 			{ path: "/example", element: <ExamplePage /> },
-			{ path: "/equipas", element: <Teams />}
+			{ path: "/equipas", element: <TeamsList />},
+			{ path: "/equipa/:id", element: <Team />}
 		]
 	},
 	{ path: "/entrar", element: <LoginPage />, errorElement: <ErrorPage /> },

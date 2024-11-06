@@ -1,0 +1,45 @@
+#team-page {
+    padding-top: 1rem;
+}
+
+#team-page .profile-picture {
+    width: 150px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+
+#team-page #profile-header {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+#team-page #profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+#team-page #profile-info .line,
+#profile-action-buttons button {
+    display: flex;
+	align-items: center;
+}
+
+#team-page #profile-info .line svg {
+    margin-right: 1rem;
+}
+
+#profile-action-buttons svg {
+    margin-right: 0.5rem;
+}
+
+#profile-action-buttons {
+    margin-top: 0.5rem;
+}
+
+#team-page .nav-tabs {
+    width: 100vw;
+    max-width: 100%;
+}
