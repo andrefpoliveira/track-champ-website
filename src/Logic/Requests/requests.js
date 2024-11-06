@@ -45,3 +45,15 @@ export async function update(payload) {
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
+
+export async function getTeams() {
+	let url = process.env.REACT_APP_SERVER_URL + '/team/get-teams';
+	const response = await makeRequest(url);
+	return response;
+}
+
+export async function createTeam(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/team/create';
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
+}

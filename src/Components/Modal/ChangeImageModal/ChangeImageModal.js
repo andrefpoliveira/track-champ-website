@@ -7,7 +7,7 @@ import { FaImage, FaTrashAlt } from "react-icons/fa";
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './getCroppedImg'; // Import the cropping utility function
 
-export default function MyVerticallyCenteredModal(props) {
+export default function ChangeImageModal(props) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);

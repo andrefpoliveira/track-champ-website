@@ -112,7 +112,6 @@ export default function EditProfile() {
 				existsAlready = {imageSet}
 
 				choosePhoto={(img) => {
-					console.log(img);
 					setImageSet(true);
 					setProfileImage(img);
 					setModalShow(false);

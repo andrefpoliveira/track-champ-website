@@ -9,11 +9,16 @@ import { FaPlus } from "react-icons/fa";
 
 import AuthContext from '../../Logic/AppContext';
 
+import { getTeams, update } from '../../Logic/Requests/requests';
+import NewTeamModal from '../../Components/Modal/NewTeam/NewTeamModal';
+
 function TeamPlaceholder() {
 	return (
 		<Card>
-			<Card.Img className="team-picture" src='/images/defaultProfile.jpg' alt='default team profile' />
-			<div class='card-side-body'>
+			<Placeholder as='div' animation='glow'>
+				<Placeholder className='team-picture' />
+			</Placeholder>
+			<div className='card-side-body'>
 				<Placeholder as={Card.Title} animation='glow'>
 					<Placeholder xs={12} />
 				</Placeholder>
@@ -33,9 +38,9 @@ function TeamCard(props) {
 	return (
 		<Card className='team-card'>
 			<Card.Img className="team-picture" src='/images/defaultProfile.jpg' alt='team profile' />
-			<div class='card-side-body'>
+			<div className='card-side-body'>
 				<Card.Title>{props.title}</Card.Title>
-				<Card.Text class='card-description'>{props.description}</Card.Text>
+				<Card.Text className='card-description'>{props.description}</Card.Text>
 				<span><i>{props.members} membro{props.members > 1 ? 's' : ''}</i></span>
 			</div>
 		</Card>
@@ -43,68 +48,118 @@ function TeamCard(props) {
 }
 
 export default function Teams() {
-	const { user } = React.useContext(AuthContext);
+	const { deleteProfile } = React.useContext(AuthContext);
 	const [loading, setLoading] = React.useState(true);
-	const [myTeams, setMyTeams] = React.useState([]);
+	const [userTeams, setUserTeams] = React.useState([]);
 	const [publicTeams, setPublicTeams] = React.useState([]);
 	const navigate = useNavigate();
 
+	// Create Team Modal
+	const [modalShow, setModalShow] = React.useState(false);
+
+	const fetchTeams = async () => {
+		let result = await getTeams();
+
+		if (result.statusCode === 307) {
+			deleteProfile();
+			navigate('/');
+		}
+
+		if (result.success) {
+			setUserTeams(result.user_teams);
+			setPublicTeams(result.public_teams);
+			setLoading(false);
+		}
+	}
+
+	React.useEffect(() => {
+		fetchTeams();
+	}, [deleteProfile, navigate]);
+
+	function updateTeams() {
+		fetchTeams();
+	}
+
 	return (
 		<div id='teams-page' className='page'>
+
+			<NewTeamModal
+				show={modalShow}
+				onHide={() => setModalShow(false)}
+				onTeamCreated={() => updateTeams()}
+			/>
+
 			<div id='my-teams'>
 				<div className="section-header">
 					<h2>As minhas equipas</h2>
 					<div>
-						<Button size='sm' onClick={() => {}} disabled>
+						<Button size='sm' onClick={() => setModalShow(true)}>
 							<FaPlus size={15}/> Criar Equipa
 						</Button>
 					</div>
 				</div>
-				<Row xs={1} md={2} lg={3}>
+
+				<>
 					{
 						loading
-						? Array(3).fill(1).map((input, i) => (
-							<Col key={i}>
-								<TeamPlaceholder />
-							</Col>
-						))
-						: myTeams.length === 0
+						? <Row xs={1} md={2} lg={3}>
+							{
+								Array(3).fill(1).map((_, i) => (
+									<Col key={i}>
+										<TeamPlaceholder />
+									</Col>
+								))
+							}
+						</Row>
+						: userTeams.length === 0
 							? <span>Não estás em nenhuma equipa... Experimenta criar a tua!</span>
-							: myTeams.map((team, i) => (
-								<Col key={team.id}>
-									<TeamCard
-										title={team.title}
-										description={team.description}
-										members={team.members}
-									/>
-								</Col>
-							))
+							: <Row xs={1} md={2} lg={3}>
+								{
+									userTeams.map((team) => (
+										<Col key={team.id}>
+											<TeamCard
+												title={team.name}
+												description={team.description}
+												members={team.members}
+											/>
+										</Col>
+									))
+								}
+							</Row>
 					}
-				</Row>
+				</>
 			</div>
 			<div id='discover-teams'>
 				<h2>Descobrir equipas</h2>
-				<Row xs={1} md={2} lg={3}>
-				{
+				<>
+					{
 						loading
-						? Array(6).fill(1).map((input, i) => (
-							<Col key={i}>
-								<TeamPlaceholder />
-							</Col>
-						))
+						? <Row xs={1} md={2} lg={3}>
+							{
+								Array(3).fill(1).map((_, i) => (
+									<Col key={i}>
+										<TeamPlaceholder />
+									</Col>
+								))
+							}
+						</Row>
 						: publicTeams.length === 0
-							? <span>Não existem equipas nas quais possas entrar... Experimenta criar a tua!</span>
-							: publicTeams.map((team, i) => (
-								<Col key={team.id}>
-									<TeamCard
-										title={team.title}
-										description={team.description}
-										members={team.members}
-									/>
-								</Col>
-							))
+							? <span>Não existem equipas em que te possas juntar... Experimenta criar a tua!</span>
+							: <Row xs={1} md={2} lg={3}>
+								{
+									publicTeams.map((team) => (
+										<Col key={team.id}>
+											<TeamCard
+												title={team.name}
+												description={team.description}
+												members={team.members}
+											/>
+										</Col>
+									))
+								}
+							</Row>
 					}
-				</Row>
+				</>
 			</div>
 		</div>
 	);
