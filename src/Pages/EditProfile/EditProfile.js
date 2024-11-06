@@ -124,7 +124,7 @@ export default function EditProfile() {
 					className="profile-picture"
 					src={profileImage}
 					alt={user.getName()}
-					onClick={() => setModalShow(true)}
+					onClick={() => setModalShow(false)}
 				/>
 			</div>
 			
