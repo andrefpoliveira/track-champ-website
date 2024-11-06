@@ -17,7 +17,10 @@ export default function Header() {
 			<Container>
 				{/* <Navbar.Brand href="#home">Navbar with text</Navbar.Brand> */}
 				<Navbar.Toggle />
-				<Navbar.Collapse className="justify-content-end">
+				<Navbar.Collapse className="justify-content-between">
+					<Navbar.Text>
+						0.1.0v
+					</Navbar.Text>
 					<Navbar.Text>
 						{
 							user
