@@ -27,6 +27,7 @@
 
 #teams-page .row {
     margin: 0;
+    margin-left: -0.7rem;
 }
 
 .card-side-body {
