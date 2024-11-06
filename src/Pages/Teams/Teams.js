@@ -11,6 +11,7 @@ import AuthContext from '../../Logic/AppContext';
 
 import { getTeams, update } from '../../Logic/Requests/requests';
 import NewTeamModal from '../../Components/Modal/NewTeam/NewTeamModal';
+import ToastContext from '../../Logic/ToastContext';
 
 function TeamPlaceholder() {
 	return (
@@ -49,6 +50,7 @@ function TeamCard(props) {
 
 export default function Teams() {
 	const { deleteProfile } = React.useContext(AuthContext);
+	const { showToast } = React.useContext(ToastContext);
 	const [loading, setLoading] = React.useState(true);
 	const [userTeams, setUserTeams] = React.useState([]);
 	const [publicTeams, setPublicTeams] = React.useState([]);
@@ -61,6 +63,7 @@ export default function Teams() {
 		let result = await getTeams();
 
 		if (result.statusCode === 307) {
+			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
 			deleteProfile();
 			navigate('/');
 		}
