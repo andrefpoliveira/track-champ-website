@@ -1,0 +1,74 @@
+#teams-page {
+    padding-top: 1rem;
+}
+
+#discover-teams {
+    width: 100vw;
+    max-width: 100%;
+}
+
+.team-card {
+    cursor: pointer;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.team-picture {
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+}
+
+#teams-page .row {
+    margin: 0;
+}
+
+.card-side-body {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card-description {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+
+    margin-bottom: 0.5rem;
+}
+
+.card-title {
+    font-size: 1rem;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+}
+
+.section-header {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header button {
+    display: flex;
+    align-items: center;
+}
+
+.section-header button svg {
+    margin-right: 0.5rem;
+}

@@ -51,7 +51,10 @@ export default function Sidebar() {
 				<span>Perfil</span>
 			</div>
 
-			<div className="sidebar-item">
+			<div
+				className="sidebar-item"
+				onClick={() => navigate('/equipas')}
+			>
 				<FaUsers />
 				<span>Equipas</span>
 			</div>

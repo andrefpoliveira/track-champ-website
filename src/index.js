@@ -17,8 +17,8 @@ import LoginPage from './Pages/Login/Login';
 import RegisterPage from './Pages/Register/Register';
 import MyProfile from './Pages/MyProfile/MyProfile';
 import EditProfile from './Pages/EditProfile/EditProfile';
-
 import ExamplePage from './Pages/ExamplePage/ExamplePage';
+import Teams from './Pages/Teams/Teams';
 
 const router = createBrowserRouter([
 	{
@@ -28,7 +28,8 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "/meu-perfil", element: <MyProfile /> },
 			{ path: "/editar-perfil", element: <EditProfile /> },
-			{ path: "/example", element: <ExamplePage /> }
+			{ path: "/example", element: <ExamplePage /> },
+			{ path: "/equipas", element: <Teams />}
 		]
 	},
 	{ path: "/entrar", element: <LoginPage />, errorElement: <ErrorPage /> },
