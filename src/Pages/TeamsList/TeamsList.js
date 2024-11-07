@@ -128,7 +128,7 @@ export default function TeamsList() {
 									userTeams.map((team) => (
 										<Col key={team.id}>
 											<TeamCard
-												id={team.id}									
+												id={team.id}								
 												title={team.name}
 												description={team.description}
 												members={team.members}
@@ -162,6 +162,7 @@ export default function TeamsList() {
 									publicTeams.map((team) => (
 										<Col key={team.id}>
 											<TeamCard
+												id={team.id}
 												title={team.name}
 												description={team.description}
 												members={team.members}
