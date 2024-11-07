@@ -19,14 +19,14 @@ export default function Header() {
 				<Navbar.Toggle />
 				<Navbar.Collapse className="justify-content-between">
 					<Navbar.Text>
-						v0.6.1
+						v0.6.2
 					</Navbar.Text>
 					<Navbar.Text>
 						{
 							user
 							? <div className='profile-info'>
 								<span><b>{user.getName()}</b></span>
-								<img className="profile-picture" src={user.getProfileImage()} alt={user.getName()} />
+								<img className="profile-picture" src={!user.getProfileImage().includes('/default') ? process.env.REACT_APP_SERVER_URL + user.getProfileImage() : user.getProfileImage()} alt={user.getName()} />
 							</div>
 							: <span><Link to={'/entrar'}>Entrar</Link></span> 
 						}

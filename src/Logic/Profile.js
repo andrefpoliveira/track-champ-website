@@ -11,10 +11,6 @@ class Profile {
 		this.activated = info.activated;
 		this.createdIn = info.created_in;
 		this.lastLogIn = info.last_logIn;
-
-		if (this.profileImage) {
-			this.profileImage = process.env.REACT_APP_SERVER_URL + this.profileImage;
-		}
 	}
 
 	getId() { return this.id; }
