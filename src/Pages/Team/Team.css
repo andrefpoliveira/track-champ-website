@@ -55,6 +55,10 @@
     margin-right: 0.5rem;
 }
 
+#team-page .card svg {
+    margin-left: 0.5rem;
+}
+
 #team-page .card {
     display: flex;
     flex-direction: row;

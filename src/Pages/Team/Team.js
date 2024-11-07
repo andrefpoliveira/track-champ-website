@@ -5,6 +5,8 @@ import { Card, Row, Col, Tabs, Tab } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { PiCrownSimpleFill } from "react-icons/pi";
+import { RiPoliceBadgeFill } from "react-icons/ri";
 
 import AuthContext from '../../Logic/AppContext';
 
@@ -65,8 +67,16 @@ export default function Team() {
 									teamInfo.users.map((user) => (
 										<Col>
 											<Card>
+												{}
 												<img className='member-image' src={user.profile_image || '/images/defaultProfile.jpg'} alt={user.first_name} />
 												{user.first_name} {user.last_name}
+												{
+													user.is_creator
+													? <PiCrownSimpleFill color='#e4cd05'/>
+													: user.is_admin
+														? <RiPoliceBadgeFill color='#0047ab'/>
+														: null
+												}
 											</Card>
 										</Col>
 									))
