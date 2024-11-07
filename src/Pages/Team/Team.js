@@ -15,6 +15,8 @@ import { RiDeleteBin7Fill } from "react-icons/ri";
 import AuthContext from '../../Logic/AppContext';
 import ToastContext from '../../Logic/ToastContext';
 
+import InviteToTeamModal from '../../Components/Modal/InviteToTeam/InviteToTeam';
+
 import { getTeam, enterTeam, exitTeam, deleteTeam } from '../../Logic/Requests/requests';
 
 export default function Team() {
@@ -24,6 +26,7 @@ export default function Team() {
 	const { showToast } = React.useContext(ToastContext);
 
 	const [teamInfo, setTeamInfo] = React.useState({});
+	const [modalShow, setModalShow] = React.useState(false);
 
 	const [loading, setLoading] = React.useState(true);
 	const navigate = useNavigate();
@@ -97,91 +100,102 @@ export default function Team() {
 			{
 				loading
 				? null
-				: <div id='team-page' className='page'>
-					<div id='team-header'>
-						<div className='team-header-info'>
-							<img className="team-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
-							<div id='team-info'>
-								<h2>{teamInfo.team.name}</h2>
-								<h4>{teamInfo.team.description}</h4>
+				: <>
+					<InviteToTeamModal
+						show={modalShow}
+						onHide={() => setModalShow(false)}
+						onPersonInvited={() => fetchTeam()}
+						teamId={teamInfo.team.id}
+					/>
+					
+					<div id='team-page' className='page'>
+						<div id='team-header'>
+							<div className='team-header-info'>
+								<img className="team-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
+								<div id='team-info'>
+									<h2>{teamInfo.team.name}</h2>
+									<h4>{teamInfo.team.description}</h4>
+								</div>
 							</div>
+							<span>{teamInfo.user.joined}</span>
+							{
+								!loading
+								? <div className='team-header-buttons'>
+									{
+										teamInfo.user.is_admin || teamInfo.user.is_creator
+										? <Button
+											onClick={() => setModalShow(true)}
+										>
+											<IoMdPersonAdd />Convidar
+										</Button>
+										: null
+									}
+									{
+										!teamInfo.user.joined
+										? <Button
+											onClick={() => handleEnterTeamButton()}
+										>
+											<RxEnter />Entrar
+										</Button>
+										: null
+									}
+									{
+										!(teamInfo.user.is_admin || teamInfo.user.is_creator) && teamInfo.user.joined
+										? <Button
+											onClick={() => handleExitTeamButton()}
+										>
+											<RxExit />Sair
+										</Button>
+										: null
+									}
+									{
+										teamInfo.user.is_creator
+										? <Button
+											variant='danger'
+											onClick={() => handleDeleteTeamButton()}
+										>
+											<RiDeleteBin7Fill />Apagar
+										</Button>
+										: null
+									}
+								</div>
+								: null
+							}
 						</div>
-						<span>{teamInfo.user.joined}</span>
-						{
-							!loading
-							? <div className='team-header-buttons'>
-								{
-									teamInfo.user.is_admin || teamInfo.user.is_creator
-									? <Button disabled>
-										<IoMdPersonAdd />Convidar
-									</Button>
-									: null
-								}
-								{
-									!teamInfo.user.joined
-									? <Button
-										onClick={() => handleEnterTeamButton()}
-									>
-										<RxEnter />Entrar
-									</Button>
-									: null
-								}
-								{
-									!(teamInfo.user.is_admin || teamInfo.user.is_creator) && teamInfo.user.joined
-									? <Button
-										onClick={() => handleExitTeamButton()}
-									>
-										<RxExit />Sair
-									</Button>
-									: null
-								}
-								{
-									teamInfo.user.is_creator
-									? <Button
-										variant='danger'
-										onClick={() => handleDeleteTeamButton()}
-									>
-										<RiDeleteBin7Fill />Apagar
-									</Button>
-									: null
-								}
-							</div>
-							: null
-						}
+
+						<Tabs
+							defaultActiveKey='members'
+							className="mb-3"
+						>
+							<Tab eventKey='members' title='Membros'>
+								<Row xs={2} md={3} lg={4}>
+									{
+										teamInfo.users.map((user) => (
+											<Col>
+												<Card>
+													{}
+													<img className='member-image' src={user.profile_image || '/images/defaultProfile.jpg'} alt={user.first_name} />
+													{user.first_name} {user.last_name}
+													{
+														user.is_creator
+														? <PiCrownSimpleFill color='#e4cd05'/>
+														: user.is_admin
+															? <RiPoliceBadgeFill color='#0047ab'/>
+															: null
+													}
+												</Card>
+											</Col>
+										))
+									}
+								</Row>
+							</Tab>
+
+							<Tab eventKey='compare' title='Comparar'>
+								Comparar
+							</Tab>
+						</Tabs>
 					</div>
-
-					<Tabs
-						defaultActiveKey='members'
-						className="mb-3"
-					>
-						<Tab eventKey='members' title='Membros'>
-							<Row xs={2} md={3} lg={4}>
-								{
-									teamInfo.users.map((user) => (
-										<Col>
-											<Card>
-												{}
-												<img className='member-image' src={user.profile_image || '/images/defaultProfile.jpg'} alt={user.first_name} />
-												{user.first_name} {user.last_name}
-												{
-													user.is_creator
-													? <PiCrownSimpleFill color='#e4cd05'/>
-													: user.is_admin
-														? <RiPoliceBadgeFill color='#0047ab'/>
-														: null
-												}
-											</Card>
-										</Col>
-									))
-								}
-							</Row>
-						</Tab>
-
-						<Tab eventKey='compare' title='Comparar'>
-							Comparar
-						</Tab>
-					</Tabs>
-				</div>
+				</>
 			}
 		</>
 	);

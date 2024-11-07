@@ -58,6 +58,7 @@ export default function NewTeamModal(props) {
 			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
 			deleteProfile();
 			props.onHide();
+            navigate('/');
 		}
 
 		if (result.success) {
@@ -100,7 +101,6 @@ export default function NewTeamModal(props) {
         <Modal
             id='new-team-modal'
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -124,7 +124,7 @@ export default function NewTeamModal(props) {
                 <img
 					className="team-picture"
 					src={teamImage || '/images/defaultProfile.jpg'}
-					alt={'team image'}
+					alt={'team profile'}
 					onClick={() => setModalShow(false)}
 				/>
 

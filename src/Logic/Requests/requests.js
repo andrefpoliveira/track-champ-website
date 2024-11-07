@@ -81,3 +81,9 @@ export async function deleteTeam(id) {
 	const response = await makeRequest(url, 'DELETE');
 	return response;
 }
+
+export async function inviteToTeam(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + `/team/invite`;
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
+}
