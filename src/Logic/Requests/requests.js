@@ -63,3 +63,9 @@ export async function getTeam(id) {
 	const response = await makeRequest(url);
 	return response;
 }
+
+export async function enterTeam(id) {
+	let url = process.env.REACT_APP_SERVER_URL + `/team/enter/${id}`;
+	const response = await makeRequest(url, 'POST');
+	return response;
+}

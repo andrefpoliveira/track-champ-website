@@ -2,40 +2,52 @@
     padding-top: 1rem;
 }
 
-#team-page .profile-picture {
+#team-page .team-picture {
     width: 150px;
+    height: 150px;
     border: 1px solid black;
     border-radius: 50%;
     margin-right: 2rem;
 }
 
-#team-page #profile-header {
+#team-page #team-header {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 2rem;
+    margin-right: 1rem;
 }
 
-#team-page #profile-info {
+#team-header .team-header-info {
+    display: flex;
+    flex-direction: row;
+}
+
+#team-header .team-header-buttons svg {
+    margin-right: 0.5rem;
+}
+
+#team-page #team-info {
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: center;
 }
 
-#team-page #profile-info .line,
-#profile-action-buttons button {
+#team-page #team-info .line,
+#team-action-buttons button {
     display: flex;
 	align-items: center;
 }
 
-#team-page #profile-info .line svg {
+#team-page #team-info .line svg {
     margin-right: 1rem;
 }
 
-#profile-action-buttons svg {
+#team-action-buttons svg {
     margin-right: 0.5rem;
 }
 
-#profile-action-buttons {
+#team-action-buttons {
     margin-top: 0.5rem;
 }
 
@@ -63,4 +75,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+#team-page .team-header-buttons button {
+    margin-left: 1rem;
 }

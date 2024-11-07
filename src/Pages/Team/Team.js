@@ -1,17 +1,21 @@
 import './Team.css';
 import React from "react";
 
-import { Card, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Card, Row, Col, Tabs, Tab, Button } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { PiCrownSimpleFill } from "react-icons/pi";
 import { RiPoliceBadgeFill } from "react-icons/ri";
+import { RxEnter } from "react-icons/rx";
+import { RxExit } from "react-icons/rx";
+import { IoMdPersonAdd } from "react-icons/io";
+import { RiDeleteBin7Fill } from "react-icons/ri";
 
 import AuthContext from '../../Logic/AppContext';
-
-import { getTeam } from '../../Logic/Requests/requests';
 import ToastContext from '../../Logic/ToastContext';
+
+import { getTeam, enterTeam } from '../../Logic/Requests/requests';
 
 export default function Team() {
 	const { id } = useParams();
@@ -43,18 +47,72 @@ export default function Team() {
 		fetchTeam();
 	}, [deleteProfile, navigate]);
 
+	const handleEnterTeamButton = async () => {
+		let result = await enterTeam(teamInfo.team.id);
+
+		if (result.statusCode === 307) {
+			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+			deleteProfile();
+			navigate('/');
+		}
+
+		if (result.success) {
+			showToast('Bem-vindo à equipa!');
+			fetchTeam();
+		}
+	}
+
 	return (
 		<>
 			{
 				loading
 				? null
 				: <div id='team-page' className='page'>
-					<div id='profile-header'>
-						<img className="profile-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
-						<div id='profile-info'>
-							<h2>{teamInfo.team.name}</h2>
-							<h4>{teamInfo.team.description}</h4>
+					<div id='team-header'>
+						<div className='team-header-info'>
+							<img className="team-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
+							<div id='team-info'>
+								<h2>{teamInfo.team.name}</h2>
+								<h4>{teamInfo.team.description}</h4>
+							</div>
 						</div>
+						<span>{teamInfo.user.joined}</span>
+						{
+							!loading
+							? <div className='team-header-buttons'>
+								{
+									teamInfo.user.is_admin || teamInfo.user.is_creator
+									? <Button disabled>
+										<IoMdPersonAdd />Convidar
+									</Button>
+									: null
+								}
+								{
+									!teamInfo.user.joined
+									? <Button
+										onClick={() => handleEnterTeamButton()}
+									>
+										<RxEnter />Entrar
+									</Button>
+									: null
+								}
+								{
+									!(teamInfo.user.is_admin || teamInfo.user.is_creator) && teamInfo.user.joined
+									? <Button disabled>
+										<RxExit />Sair
+									</Button>
+									: null
+								}
+								{
+									teamInfo.user.is_creator
+									? <Button variant='danger' disabled>
+										<RiDeleteBin7Fill />Apagar
+									</Button>
+									: null
+								}
+							</div>
+							: null
+						}
 					</div>
 
 					<Tabs
