@@ -43,3 +43,20 @@
     width: 100vw;
     max-width: 100%;
 }
+
+#team-page .row {
+    margin: 0;
+}
+
+#team-page .member-image {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+}
+
+#team-page .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

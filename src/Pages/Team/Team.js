@@ -65,6 +65,7 @@ export default function Team() {
 									teamInfo.users.map((user) => (
 										<Col>
 											<Card>
+												<img className='member-image' src={user.profile_image || '/images/defaultProfile.jpg'} alt={user.first_name} />
 												{user.first_name} {user.last_name}
 											</Card>
 										</Col>
