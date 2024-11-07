@@ -15,7 +15,7 @@ import { RiDeleteBin7Fill } from "react-icons/ri";
 import AuthContext from '../../Logic/AppContext';
 import ToastContext from '../../Logic/ToastContext';
 
-import { getTeam, enterTeam } from '../../Logic/Requests/requests';
+import { getTeam, enterTeam, exitTeam } from '../../Logic/Requests/requests';
 
 export default function Team() {
 	const { id } = useParams();
@@ -62,6 +62,21 @@ export default function Team() {
 		}
 	}
 
+	const handleExitTeamButton = async () => {
+		let result = await exitTeam(teamInfo.team.id);
+
+		if (result.statusCode === 307) {
+			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+			deleteProfile();
+			navigate('/');
+		}
+
+		if (result.success) {
+			showToast('Saiste da equipa. A voltar à página das equipas');
+			navigate('/equipas')
+		}
+	}
+
 	return (
 		<>
 			{
@@ -98,7 +113,9 @@ export default function Team() {
 								}
 								{
 									!(teamInfo.user.is_admin || teamInfo.user.is_creator) && teamInfo.user.joined
-									? <Button disabled>
+									? <Button
+										onClick={() => handleExitTeamButton()}
+									>
 										<RxExit />Sair
 									</Button>
 									: null
