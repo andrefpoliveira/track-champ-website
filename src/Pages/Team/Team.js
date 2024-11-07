@@ -15,7 +15,7 @@ import { RiDeleteBin7Fill } from "react-icons/ri";
 import AuthContext from '../../Logic/AppContext';
 import ToastContext from '../../Logic/ToastContext';
 
-import { getTeam, enterTeam, exitTeam } from '../../Logic/Requests/requests';
+import { getTeam, enterTeam, exitTeam, deleteTeam } from '../../Logic/Requests/requests';
 
 export default function Team() {
 	const { id } = useParams();
@@ -77,6 +77,21 @@ export default function Team() {
 		}
 	}
 
+	const handleDeleteTeamButton = async () => {
+		let result = await deleteTeam(teamInfo.team.id);
+
+		if (result.statusCode === 307) {
+			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+			deleteProfile();
+			navigate('/');
+		}
+
+		if (result.success) {
+			showToast('Apagaste equipa. A voltar à página das equipas');
+			navigate('/equipas')
+		}
+	}
+
 	return (
 		<>
 			{
@@ -122,7 +137,10 @@ export default function Team() {
 								}
 								{
 									teamInfo.user.is_creator
-									? <Button variant='danger' disabled>
+									? <Button
+										variant='danger'
+										onClick={() => handleDeleteTeamButton()}
+									>
 										<RiDeleteBin7Fill />Apagar
 									</Button>
 									: null

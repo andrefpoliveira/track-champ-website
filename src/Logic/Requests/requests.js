@@ -75,3 +75,9 @@ export async function exitTeam(id) {
 	const response = await makeRequest(url, 'POST');
 	return response;
 }
+
+export async function deleteTeam(id) {
+	let url = process.env.REACT_APP_SERVER_URL + `/team/delete/${id}`;
+	const response = await makeRequest(url, 'DELETE');
+	return response;
+}
