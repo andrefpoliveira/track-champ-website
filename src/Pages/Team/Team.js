@@ -1,7 +1,7 @@
 import './Team.css';
 import React from "react";
 
-import { Placeholder, Card, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
+import { Card, Row, Col, Tabs, Tab } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -48,7 +48,7 @@ export default function Team() {
 				? null
 				: <div id='team-page' className='page'>
 					<div id='profile-header'>
-						<img className="profile-picture" src='/images/defaultProfile.jpg' alt={'team image'} />
+						<img className="profile-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
 						<div id='profile-info'>
 							<h2>{teamInfo.team.name}</h2>
 							<h4>{teamInfo.team.description}</h4>
@@ -63,9 +63,11 @@ export default function Team() {
 							<Row xs={2} md={3} lg={4}>
 								{
 									teamInfo.users.map((user) => (
-										<Card>
-											{user.first_name} {user.last_name}
-										</Card>
+										<Col>
+											<Card>
+												{user.first_name} {user.last_name}
+											</Card>
+										</Col>
 									))
 								}
 							</Row>

@@ -9,7 +9,7 @@ import { FaPlus } from "react-icons/fa";
 
 import AuthContext from '../../Logic/AppContext';
 
-import { getTeams, update } from '../../Logic/Requests/requests';
+import { getTeams } from '../../Logic/Requests/requests';
 import NewTeamModal from '../../Components/Modal/NewTeam/NewTeamModal';
 import ToastContext from '../../Logic/ToastContext';
 
@@ -165,6 +165,7 @@ export default function TeamsList() {
 												title={team.name}
 												description={team.description}
 												members={team.members}
+												navigateFunction={navigateTeamPage}
 											/>
 										</Col>
 									))
