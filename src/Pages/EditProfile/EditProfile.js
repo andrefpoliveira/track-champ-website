@@ -129,7 +129,7 @@ export default function EditProfile() {
 					className="profile-picture"
 					src={profileImage}
 					alt={user.getName()}
-					onClick={() => setModalShow(false)}
+					onClick={() => setModalShow(true)}
 				/>
 			</div>
 			

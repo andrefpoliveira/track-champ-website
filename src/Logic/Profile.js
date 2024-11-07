@@ -7,10 +7,14 @@ class Profile {
 		this.email = info.email;
 		this.birthday = info.birthday;
 		this.gender = info.gender;
-		this.profileImage = info.profileImage;
+		this.profileImage = info.profile_image;
 		this.activated = info.activated;
-		this.createdIn = info.createdIn;
-		this.lastLogIn = info.lastLogIn;
+		this.createdIn = info.created_in;
+		this.lastLogIn = info.last_logIn;
+
+		if (this.profileImage) {
+			this.profileImage = process.env.REACT_APP_SERVER_APP + this.profileImage;
+		}
 	}
 
 	getId() { return this.id; }
