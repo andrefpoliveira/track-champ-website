@@ -20,7 +20,7 @@ export default function Header() {
 				<Navbar.Toggle />
 				<Navbar.Collapse className="justify-content-between">
 					<Navbar.Text>
-						v0.8.1
+						v0.8.2
 					</Navbar.Text>
 					<Navbar.Text>
 						{

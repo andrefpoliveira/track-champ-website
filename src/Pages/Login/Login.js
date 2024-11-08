@@ -8,6 +8,9 @@ import Col from "react-bootstrap/Col";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { IoMdEye } from "react-icons/io";
+import { IoMdEyeOff } from "react-icons/io";
+
 import { login } from "../../Logic/Requests/requests";
 import AuthContext from "../../Logic/AppContext";
 import ToastContext from "../../Logic/ToastContext";
@@ -17,6 +20,9 @@ export default function LoginPage() {
 	const [errors, setErrors] = React.useState({});
 	const { user, storeProfile } = React.useContext(AuthContext);
 	const { showToast } = React.useContext(ToastContext);
+
+	const [showPassword, setShowPassword] = React.useState(false);
+	
 	const navigate = useNavigate();
 
 	React.useLayoutEffect(() => {
@@ -86,6 +92,10 @@ export default function LoginPage() {
 		return validationErrors;
 	};
 
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevState) => !prevState);
+	};
+
 	return (
 		<div id="login-page">
 			<h1 className="mb-5">Bem-vindo de volta!</h1>
@@ -109,11 +119,20 @@ export default function LoginPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label><b>Password</b></Form.Label>
-							<Form.Control
-								className={errors.password ? "form-error" : ""}
-								type="password"
-								name="password"
-							/>
+							<div id='formPasswordContent'>
+								<Form.Control
+									className={errors.password ? "form-error" : ""}
+									type={showPassword ? "text" : "password"}
+									name="password"
+								/>
+
+								<span
+									onClick={togglePasswordVisibility}
+								>
+									{showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+								</span>
+
+							</div>
 							{errors.password && <p className="form-error-label">{errors.password}</p>}
 						</Form.Group>
 					</Col>

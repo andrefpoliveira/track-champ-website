@@ -8,6 +8,9 @@ import Col from "react-bootstrap/Col";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { IoMdEye } from "react-icons/io";
+import { IoMdEyeOff } from "react-icons/io";
+
 import { register } from "../../Logic/Requests/requests";
 import AuthContext from "../../Logic/AppContext";
 import ToastContext from "../../Logic/ToastContext";
@@ -15,6 +18,8 @@ import ToastContext from "../../Logic/ToastContext";
 export default function RegisterPage() {
 	const { user } = React.useContext(AuthContext);
 	const { showToast } = React.useContext(ToastContext);
+
+	const [showPassword, setShowPassword] = React.useState(false);
 
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
@@ -112,6 +117,10 @@ export default function RegisterPage() {
 		return validationErrors;
 	};
 
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevState) => !prevState);
+	};
+
 	return (
 		<div id="register-page">
 			<h1 className="mb-5">Cria uma conta!</h1>
@@ -190,11 +199,20 @@ export default function RegisterPage() {
 					<Col>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label><b>Password</b></Form.Label>
-							<Form.Control
-								className={errors.password ? "form-error" : ""}
-								type="password"
-								name="password"
-							/>
+							<div id='formPasswordContent'>
+								<Form.Control
+									className={errors.password ? "form-error" : ""}
+									type={showPassword ? "text" : "password"}
+									name="password"
+								/>
+
+								<span
+									onClick={togglePasswordVisibility}
+								>
+									{showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+								</span>
+							</div>
+
 							{errors.password && <p className="form-error-label">{errors.password}</p>}
 						</Form.Group>
 					</Col>
