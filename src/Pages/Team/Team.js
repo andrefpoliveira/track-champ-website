@@ -259,8 +259,8 @@ export default function Team() {
 								</Row>
 							</Tab>
 
-							<Tab eventKey='compare' title='Comparar'>
-								Comparar
+							<Tab eventKey='compare' title='Análise'>
+								Análise
 							</Tab>
 						</Tabs>
 					</div>
