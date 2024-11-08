@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from '../../../Logic/AppContext';
 import { resolveImagePath } from '../../../Logic/Utils/images';
 
+const maxTitleSize = 30
+const maxDescriptionSize = 100
 
 export default function NewTeamModal(props) {
     const { showToast } = React.useContext(ToastContext);
@@ -23,6 +25,9 @@ export default function NewTeamModal(props) {
     const [modalShow, setModalShow] = React.useState(false);
     const [imageSet, setImageSet] = React.useState(false);
     const [teamImage, setTeamImage] = React.useState(null);
+
+    const [titleSize, setTitleSize] = React.useState(0);
+    const [descriptionSize, setDescriptionSize] = React.useState(0);
 
     const [isLoading, setIsLoading] = React.useState(false);
 	const [errors, setErrors] = React.useState({});
@@ -98,6 +103,16 @@ export default function NewTeamModal(props) {
         return validationErrors;
 	};
 
+    const handleTitleChange = (e) => {
+        var titleLength = e.target.value.length;
+        setTitleSize(titleLength);
+    }
+
+    const handleDescriptionChange = (e) => {
+        var descriptionLength = e.target.value.length;
+        setDescriptionSize(descriptionLength);
+    }
+
     return (
         <Modal
             id='new-team-modal'
@@ -136,12 +151,17 @@ export default function NewTeamModal(props) {
                         <Col>
                             <Form.Group className="mb-3" controlId="formName">
                                 <Form.Label><b>Nome</b></Form.Label>
-                                <Form.Control
-                                    className={errors.name ? "form-error" : ""}
-                                    type="text"
-                                    name="name"
-                                    autoFocus
-                                />
+                                <div className='form-input-and-size'>
+                                    <Form.Control
+                                        onChange={handleTitleChange}
+                                        className={errors.name ? "form-error" : ""}
+                                        type="text"
+                                        name="name"
+                                        autoFocus
+                                        maxLength={maxTitleSize}
+                                    />
+                                    <span>{titleSize}/{maxTitleSize}</span>
+                                </div>
                                 {errors.name && <p className="form-error-label">{errors.name}</p>}
                             </Form.Group>
                         </Col>
@@ -151,11 +171,16 @@ export default function NewTeamModal(props) {
                         <Col>
                             <Form.Group className="mb-3" controlId="formDescription">
                                 <Form.Label><b>Descrição</b></Form.Label>
-                                <Form.Control
-                                    className={errors.description ? "form-error" : ""}
-                                    type="text"
-                                    name="description"
-                                />
+                                <div className='form-input-and-size'>
+                                    <Form.Control
+                                        onChange={handleDescriptionChange}
+                                        className={errors.description ? "form-error" : ""}
+                                        type="text"
+                                        name="description"
+                                        maxLength={maxDescriptionSize}
+                                    />
+                                    <span>{descriptionSize}/{maxDescriptionSize}</span>
+                                </div>
                                 {errors.description && <p className="form-error-label">{errors.description}</p>}
                             </Form.Group>
                         </Col>

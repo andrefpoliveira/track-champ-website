@@ -20,3 +20,14 @@
 #new-team-modal form {
     max-width: 100%;
 }
+
+.form-input-and-size {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.form-input-and-size span {
+    position: absolute;
+    right: 10px;
+}
