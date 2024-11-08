@@ -87,3 +87,15 @@ export async function inviteToTeam(payload) {
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
+
+export async function promoteUser(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/team/promote';
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
+}
+
+export async function depromoteUser(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/team/depromote';
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
+}
