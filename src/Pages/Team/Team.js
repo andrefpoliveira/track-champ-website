@@ -18,6 +18,7 @@ import ToastContext from '../../Logic/ToastContext';
 import InviteToTeamModal from '../../Components/Modal/InviteToTeam/InviteToTeam';
 
 import { getTeam, enterTeam, exitTeam, deleteTeam } from '../../Logic/Requests/requests';
+import { resolveImagePath } from '../../Logic/Utils/images';
 
 export default function Team() {
 	const { id } = useParams();
@@ -111,7 +112,11 @@ export default function Team() {
 					<div id='team-page' className='page'>
 						<div id='team-header'>
 							<div className='team-header-info'>
-								<img className="team-picture" src='/images/defaultProfile.jpg' alt={'team profile'} />
+								<img
+									className="team-picture"
+									src={resolveImagePath(teamInfo.team.profile_image || '/images/defaultProfile.jpg')}
+									alt={'team profile'}
+								/>
 								<div id='team-info'>
 									<h2>{teamInfo.team.name}</h2>
 									<h4>{teamInfo.team.description}</h4>
@@ -174,7 +179,11 @@ export default function Team() {
 											<Col>
 												<Card>
 													{}
-													<img className='member-image' src={user.profile_image || '/images/defaultProfile.jpg'} alt={user.first_name} />
+													<img
+														className='member-image'
+														src={resolveImagePath(user.profile_image || '/images/defaultProfile.jpg')}
+														alt={user.first_name}
+													/>
 													{user.first_name} {user.last_name}
 													{
 														user.is_creator

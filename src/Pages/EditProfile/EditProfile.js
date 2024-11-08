@@ -12,6 +12,7 @@ import { update } from '../../Logic/Requests/requests';
 import AuthContext from '../../Logic/AppContext';
 import ToastContext from '../../Logic/ToastContext';
 import ChangeImageModal from '../../Components/Modal/ChangeImageModal/ChangeImageModal'
+import { resolveImagePath } from '../../Logic/Utils/images';
 
 
 export default function EditProfile() {
@@ -53,6 +54,14 @@ export default function EditProfile() {
 			deleteProfile();
 			navigate('/')
 		}
+		
+		console.log(caches);
+		caches.keys().then((names) => {
+			// Delete all the cache files
+			names.forEach(name => {
+				console.log(name);
+			})
+		})
 
 		if (result.success) {
 			showToast('Perfil atualizado com sucesso');
@@ -62,6 +71,7 @@ export default function EditProfile() {
 			navigate('/meu-perfil')
 			return;
 		}
+
 		
 		let error = {};
 		error[result.field] = result.error;
@@ -127,7 +137,11 @@ export default function EditProfile() {
 				<h2>Editar Perfil</h2>
 				<img
 					className="profile-picture"
-					src={profileImage}
+					src={
+						profileImage.startsWith('/')
+						? resolveImagePath(profileImage)
+						: profileImage
+					}
 					alt={user.getName()}
 					onClick={() => setModalShow(true)}
 				/>

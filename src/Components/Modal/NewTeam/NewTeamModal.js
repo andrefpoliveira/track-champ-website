@@ -13,6 +13,7 @@ import { createTeam } from "../../../Logic/Requests/requests";
 import ToastContext from '../../../Logic/ToastContext';
 import { useNavigate } from "react-router-dom";
 import AuthContext from '../../../Logic/AppContext';
+import { resolveImagePath } from '../../../Logic/Utils/images';
 
 
 export default function NewTeamModal(props) {
@@ -123,9 +124,9 @@ export default function NewTeamModal(props) {
             <div className='modal-page'>
                 <img
 					className="team-picture"
-					src={teamImage || '/images/defaultProfile.jpg'}
+					src={resolveImagePath(teamImage || '/images/defaultProfile.jpg')}
 					alt={'team profile'}
-					onClick={() => setModalShow(false)}
+					onClick={() => setModalShow(true)}
 				/>
 
                 <Form
