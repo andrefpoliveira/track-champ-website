@@ -173,7 +173,7 @@ export default function Team() {
 							className="mb-3"
 						>
 							<Tab eventKey='members' title='Membros'>
-								<Row xs={2} md={3} lg={4}>
+								<Row xs={1} md={2} lg={3}>
 									{
 										teamInfo.users.map((user) => (
 											<Col>
