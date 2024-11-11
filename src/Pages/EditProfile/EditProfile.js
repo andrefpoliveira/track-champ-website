@@ -134,7 +134,6 @@ export default function EditProfile() {
 			/>
 
 			<div className='header'>
-				<h2>Editar Perfil</h2>
 				<img
 					className="profile-picture"
 					src={
