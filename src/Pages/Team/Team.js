@@ -155,6 +155,15 @@ export default function Team() {
 					<TestSessionModal
 						show={testModalShow}
 						onHide={() => setTestModalShow(false)}
+						teamId={teamInfo.team.id}
+						members={
+							[...teamInfo.users]
+							.map(person => ({
+								...person,
+								fullName: `${person.first_name} ${person.last_name}`
+							}))
+							.sort((a, b) => a.fullName.localeCompare(b.fullName))
+						}
 					/>
 					
 					<div id='team-page' className='page'>

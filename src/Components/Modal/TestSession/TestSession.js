@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 
 import TestFormsConfig from '../../TestForms/TestFormsConfig'; 
 
+import { resolveImagePath } from '../../../Logic/Utils/images';
+
 export default function TestSessionModal(props) {
     const navigate = useNavigate();
     const { showToast } = React.useContext(ToastContext);
@@ -89,6 +91,7 @@ export default function TestSessionModal(props) {
             size='lg'
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            backdrop="static"
         >
 
             <div className='modal-page'>
@@ -110,7 +113,7 @@ export default function TestSessionModal(props) {
                         >
                             {
                                 categories.map((c) => (
-                                    <option value={c.name}>{c.name}</option>
+                                    <option key={c.name} value={c.name}>{c.name}</option>
                                 ))
                             }
                         </Form.Select>
@@ -126,7 +129,7 @@ export default function TestSessionModal(props) {
                             >
                                 {
                                     tests.map((t) => (
-                                        <option value={t.name}>{t.name}</option>
+                                        <option key={t.name} value={t.name}>{t.name}</option>
                                     ))
                                 }
                             </Form.Select>
@@ -140,10 +143,14 @@ export default function TestSessionModal(props) {
                             <Form.Label><b>Atleta</b></Form.Label>
                             <Form.Select
                                 aria-label='Athlete Selection'
-                                onChange={() => {}}
                             >
                                 {
-
+                                    props.members.map((m) => (
+                                        <option value={m.id}>
+                                            {/* <img src={resolveImagePath(m.profile_image)} alt={m.fullName} /> */}
+                                            {m.fullName}
+                                        </option>
+                                    ))
                                 }
                             </Form.Select>
                         </Col>
