@@ -240,7 +240,7 @@ export default function Team() {
 								<Row xs={1} md={2} lg={3}>
 									{
 										teamInfo.users.map((member) => (
-											<Col>
+											<Col key={member.id}>
 												<Card>
 													<div>
 														<img

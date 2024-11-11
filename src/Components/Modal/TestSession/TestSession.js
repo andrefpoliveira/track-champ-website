@@ -13,19 +13,22 @@ import { getTestCategories } from '../../../Logic/Requests/requests';
 import AuthContext from '../../../Logic/AppContext';
 import { useNavigate } from 'react-router-dom';
 
-import TestFormsConfig from '../../TestForms/TestFormsConfig'; 
-
-import { resolveImagePath } from '../../../Logic/Utils/images';
+import { TestFormsDisplay, TestFormsConfig } from '../../TestForms/TestFormsConfig'; 
 
 export default function TestSessionModal(props) {
     const navigate = useNavigate();
     const { showToast } = React.useContext(ToastContext);
     const { deleteProfile } = React.useContext(AuthContext);
 
-    const [ category, setCategory ] = React.useState(null);
+    const [ category, setCategory ] = React.useState({});
     const [ categories, setCategories ] = React.useState([]);
-    const [ test, setTest ] = React.useState(null);
+
+    const [ test, setTest ] = React.useState({});
     const [ tests, setTests ] = React.useState([]);
+
+    const [ athleteId, setAthleteId] = React.useState(props.members[0].id);
+
+    const [ results, setResults ] = React.useState([]);
 
     React.useEffect(() => {
 		getCategories();
@@ -42,11 +45,11 @@ export default function TestSessionModal(props) {
 		}
 
         if (result.success) {
-            setCategory(result.categories[0].name);
+            setCategory(result.categories[0]);
             setCategories(result.categories);
 
             if (result.categories[0].tests !== undefined) {
-                setTest(result.categories[0].tests[0].name)
+                setTest(result.categories[0].tests[0])
                 setTests(result.categories[0].tests);
             }
         }
@@ -54,14 +57,15 @@ export default function TestSessionModal(props) {
 
     const handleFinish = () => {
         props.onHide();
+        setResults({});
     }
 
     const handleCategoryChange = (e) => {
         const category = e.target.value;
-        setCategory(category);
-
+        
         categories.forEach((c) => {
             if (c.label === category) {
+                setCategory(c);
                 setTests(c.tests ? c.tests : []);
                 setTest(c.tests ? c.tests[0] : null);
                 return;
@@ -74,12 +78,47 @@ export default function TestSessionModal(props) {
         setTest(test);
     }
 
+    const handleAthleteChange = (e) => {
+        const id = parseInt(e.target.value);
+        setAthleteId(id);
+    }
+
+    const submitResult = (result) => {
+        results.push({
+            'category': category.id,
+            'test': test.id,
+            'athlete': parseInt(athleteId),
+            'result': result
+        });
+
+        setResults([...results]);
+    }
+
+    const getTestDisplay = React.useMemo(() => {
+        const TestDisplay = TestFormsDisplay[category.name]?.[test.name] || null;
+
+        const relevantResults = results
+        .filter((r) => r.category === category.id && r.test === test.id && r.athlete === athleteId)
+        .map((r) => r.result);
+
+        return (
+            TestDisplay
+            ? <TestDisplay
+                key={relevantResults.length}
+                results={relevantResults}
+            />
+            : null
+        )
+    }, [results, category, test, athleteId]);
+
     const getTestForm = () => {
-        const TestForm = TestFormsConfig[category]?.[test] || null;
+        const TestForm = TestFormsConfig[category.name]?.[test.name] || null;
 
         return (
             TestForm
-            ? <TestForm />
+            ? <TestForm
+                onSubmit={submitResult}
+            />
             : null
         )
     }
@@ -143,11 +182,11 @@ export default function TestSessionModal(props) {
                             <Form.Label><b>Atleta</b></Form.Label>
                             <Form.Select
                                 aria-label='Athlete Selection'
+                                onChange={handleAthleteChange}
                             >
                                 {
                                     props.members.map((m) => (
-                                        <option value={m.id}>
-                                            {/* <img src={resolveImagePath(m.profile_image)} alt={m.fullName} /> */}
+                                        <option key={m.id} value={m.id}>
                                             {m.fullName}
                                         </option>
                                     ))
@@ -156,6 +195,9 @@ export default function TestSessionModal(props) {
                         </Col>
                     }
                 </Row>
+                {
+                    getTestDisplay
+                }
                 {
                     getTestForm()
                 }

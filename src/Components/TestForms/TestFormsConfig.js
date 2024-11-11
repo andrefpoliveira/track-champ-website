@@ -1,9 +1,13 @@
-import TrackTimingForm from "./TrackTiming/TrackTiming"
+import { TrackTimingDisplay, TrackTimingForm } from "./TrackTiming/TrackTiming"
 
-const TestFormsConfig = {
+export const TestFormsDisplay = {
+    'Testes de Pista': {
+        'Células': TrackTimingDisplay
+    }
+}
+
+export const TestFormsConfig = {
     'Testes de Pista': {
         'Células': TrackTimingForm
     }
 }
-
-export default TestFormsConfig;

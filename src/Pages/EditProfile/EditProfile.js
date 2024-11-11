@@ -54,14 +54,6 @@ export default function EditProfile() {
 			deleteProfile();
 			navigate('/')
 		}
-		
-		console.log(caches);
-		caches.keys().then((names) => {
-			// Delete all the cache files
-			names.forEach(name => {
-				console.log(name);
-			})
-		})
 
 		if (result.success) {
 			showToast('Perfil atualizado com sucesso');
