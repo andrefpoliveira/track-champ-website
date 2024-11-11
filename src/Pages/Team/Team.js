@@ -13,11 +13,13 @@ import { RxExit } from "react-icons/rx";
 import { IoMdPersonAdd } from "react-icons/io";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { SiVitest } from "react-icons/si";
 
 import AuthContext from '../../Logic/AppContext';
 import ToastContext from '../../Logic/ToastContext';
 
 import InviteToTeamModal from '../../Components/Modal/InviteToTeam/InviteToTeam';
+import TestSessionModal from '../../Components/Modal/TestSession/TestSession';
 
 import { getTeam, enterTeam, exitTeam, deleteTeam } from '../../Logic/Requests/requests';
 import { resolveImagePath } from '../../Logic/Utils/images';
@@ -31,7 +33,8 @@ export default function Team() {
 	const { showToast } = React.useContext(ToastContext);
 
 	const [teamInfo, setTeamInfo] = React.useState({});
-	const [modalShow, setModalShow] = React.useState(false);
+	const [inviteModalShow, setInviteModalShow] = React.useState(false);
+	const [testModalShow, setTestModalShow] = React.useState(false);
 
 	const [loading, setLoading] = React.useState(true);
 	const navigate = useNavigate();
@@ -143,10 +146,15 @@ export default function Team() {
 				? null
 				: <>
 					<InviteToTeamModal
-						show={modalShow}
-						onHide={() => setModalShow(false)}
+						show={inviteModalShow}
+						onHide={() => setInviteModalShow(false)}
 						onPersonInvited={() => fetchTeam()}
 						teamId={teamInfo.team.id}
+					/>
+
+					<TestSessionModal
+						show={testModalShow}
+						onHide={() => setTestModalShow(false)}
 					/>
 					
 					<div id='team-page' className='page'>
@@ -168,11 +176,18 @@ export default function Team() {
 								? <div className='team-header-buttons'>
 									{
 										teamInfo.user.is_admin || teamInfo.user.is_creator
-										? <Button
-											onClick={() => setModalShow(true)}
-										>
-											<IoMdPersonAdd />Convidar
-										</Button>
+										? <>
+											<Button
+												onClick={() => setTestModalShow(true)}
+											>
+												<SiVitest />Sessão de Testes
+											</Button>
+											<Button
+												onClick={() => setInviteModalShow(true)}
+											>
+												<IoMdPersonAdd />Convidar
+											</Button>
+										</>
 										: null
 									}
 									{

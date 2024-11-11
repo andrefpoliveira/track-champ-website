@@ -99,3 +99,9 @@ export async function depromoteUser(payload) {
 	const response = await makeRequest(url, 'POST', payload);
 	return response;
 }
+
+export async function getTestCategories(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/test/categories';
+	const response = await makeRequest(url);
+	return response;
+}

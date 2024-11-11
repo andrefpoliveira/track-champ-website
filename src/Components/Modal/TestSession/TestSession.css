@@ -1,0 +1,32 @@
+#new-test-modal .modal-content {
+    background-color: #f5f5f5;
+}
+
+#new-test-modal h4 {
+    margin: 0;
+}
+
+#new-test-modal select {
+    margin-bottom: 1rem;
+}
+
+#new-test-modal .row {
+    margin: 0;
+    padding: 0 1rem;
+}
+
+#new-test-modal .modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#new-test-modal .modal-test-definition {
+    border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+}
+
+#new-test-modal .athlete-selection {
+    margin-top: 1rem;
+}
