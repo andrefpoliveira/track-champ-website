@@ -17,6 +17,8 @@ import { TestFormsDisplay, TestFormsConfig } from '../../TestForms/TestFormsConf
 
 import { FaCheck } from "react-icons/fa";
 
+import { uploadTestResult } from '../../../Logic/Requests/requests';
+
 export default function TestSessionModal(props) {
     const navigate = useNavigate();
     const { showToast } = React.useContext(ToastContext);
@@ -59,6 +61,21 @@ export default function TestSessionModal(props) {
 
     
     const handleFinish = () => {
+
+        results.forEach((r) => {
+            let result = uploadTestResult(r);
+
+            if (result.statusCode === 307) {
+                showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+                deleteProfile();
+                props.onHide();
+                navigate('/');
+            }
+        })
+
+        if (results.length > 0)
+            showToast('Resultados carregados com sucesso!')
+
         props.onHide();
         setResults([]);
     }
@@ -87,6 +104,9 @@ export default function TestSessionModal(props) {
     }
 
     const submitResult = (result) => {
+        if (result.length === 0)
+            return;
+
         results.push({
             'category': category.id,
             'test': test.id,

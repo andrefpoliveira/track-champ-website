@@ -105,3 +105,9 @@ export async function getTestCategories(payload) {
 	const response = await makeRequest(url);
 	return response;
 }
+
+export async function uploadTestResult(payload) {
+	let url = process.env.REACT_APP_SERVER_URL + '/test/upload';
+	const response = await makeRequest(url, 'POST', payload);
+	return response;
+}
