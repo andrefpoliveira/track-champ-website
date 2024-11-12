@@ -86,8 +86,6 @@ export function TrackTimingForm(props) {
     const [ step, setStep ] = React.useState(0);
     const [ results, setResults ] = React.useState(new Array(props.distances.length).fill(''));
 
-    const inputRef = React.useRef(null);
-
     const previousStep = () => {
         setStep(step - 1);
     }

@@ -33,30 +33,31 @@ export default function TestSessionModal(props) {
     const [ results, setResults ] = React.useState([]);
 
     React.useEffect(() => {
-		getCategories();
-	}, []);
-
-    const getCategories = async () => {
-        let result = await getTestCategories();
-
-        if (result.statusCode === 307) {
-			showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
-			deleteProfile();
-			props.onHide();
-            navigate('/');
-		}
-
-        if (result.success) {
-            setCategory(result.categories[0]);
-            setCategories(result.categories);
-
-            if (result.categories[0].tests !== undefined) {
-                setTest(result.categories[0].tests[0])
-                setTests(result.categories[0].tests);
+        const getCategories = async () => {
+            let result = await getTestCategories();
+    
+            if (result.statusCode === 307) {
+                showToast('A tua sessão expirou... Inicia sessão outra vez', 'warning')
+                deleteProfile();
+                props.onHide();
+                navigate('/');
+            }
+    
+            if (result.success) {
+                setCategory(result.categories[0]);
+                setCategories(result.categories);
+    
+                if (result.categories[0].tests !== undefined) {
+                    setTest(result.categories[0].tests[0])
+                    setTests(result.categories[0].tests);
+                }
             }
         }
-    }
 
+		getCategories();
+	}, [deleteProfile, navigate, props, showToast]);
+
+    
     const handleFinish = () => {
         props.onHide();
         setResults([]);
@@ -96,12 +97,12 @@ export default function TestSessionModal(props) {
         setResults([...results]);
     }
 
-    const onDeleteResult = (index) => {
+    const onDeleteResult = React.useCallback((index) => {
         let newResults = [...results];
 
         for (let i = 0; i < results.length; i++) {
             let result = results[i];
-            if (result.category === category.id && result.test === test.id && result.athlete == athleteId) {
+            if (result.category === category.id && result.test === test.id && result.athlete === athleteId) {
                 if (index === 0) {
                     newResults.splice(i, 1);
                     setResults(newResults);
@@ -110,7 +111,7 @@ export default function TestSessionModal(props) {
                 index -= 1;
             }
         }
-    }
+    }, [athleteId, category.id, results, test.id])
 
     const getTestDisplay = React.useMemo(() => {
         const TestDisplay = TestFormsDisplay[category.name]?.[test.name] || null;
@@ -128,7 +129,7 @@ export default function TestSessionModal(props) {
             />
             : null
         )
-    }, [results, category, test, athleteId]);
+    }, [results, category, test, athleteId, onDeleteResult]);
 
     const getTestForm = () => {
         const TestForm = TestFormsConfig[category.name]?.[test.name] || null;
