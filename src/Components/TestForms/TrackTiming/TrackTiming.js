@@ -182,6 +182,9 @@ export function TrackTimingForm(props) {
                             </div>
                         </Col>
                     </Row>
+                    <div className='note'>
+                        <span><i>Nota: Introduz os tempos totais para cada distância</i></span>
+                    </div>
                 </div>
             }
         </div>
