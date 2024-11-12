@@ -1,14 +1,5 @@
 .test-form {
-    margin: 0rem 2rem;
-}
-
-.test-form .row {
-    justify-content: center;
-    padding: 0.5rem !important;
-    min-height: 2rem;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-bottom: 1rem !important;
+    margin: 0 calc(1.5rem * 0.5 + 1rem);
 }
 
 .test-form .time-slot {
@@ -22,4 +13,34 @@
     display: flex;
     justify-content: center;
     margin-bottom: 0.5rem;
+}
+
+.test-form .add-result {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.test-session-page button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.test-session-page button.left-icon svg {
+    margin-right: 0.5rem;
+}
+
+.test-session-page button.right-icon svg {
+    margin-left: 0.5rem;
+}
+
+.create-result {
+    background-color: white;
+    padding: 1rem;
+
+    border: 0;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+    margin-bottom: 1rem;
 }

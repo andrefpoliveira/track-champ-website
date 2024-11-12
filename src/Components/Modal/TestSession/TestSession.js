@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { TestFormsDisplay, TestFormsConfig } from '../../TestForms/TestFormsConfig'; 
 
+import { FaCheck } from "react-icons/fa";
+
 export default function TestSessionModal(props) {
     const navigate = useNavigate();
     const { showToast } = React.useContext(ToastContext);
@@ -57,7 +59,7 @@ export default function TestSessionModal(props) {
 
     const handleFinish = () => {
         props.onHide();
-        setResults({});
+        setResults([]);
     }
 
     const handleCategoryChange = (e) => {
@@ -94,6 +96,22 @@ export default function TestSessionModal(props) {
         setResults([...results]);
     }
 
+    const onDeleteResult = (index) => {
+        let newResults = [...results];
+
+        for (let i = 0; i < results.length; i++) {
+            let result = results[i];
+            if (result.category === category.id && result.test === test.id && result.athlete == athleteId) {
+                if (index === 0) {
+                    newResults.splice(i, 1);
+                    setResults(newResults);
+                    return
+                }
+                index -= 1;
+            }
+        }
+    }
+
     const getTestDisplay = React.useMemo(() => {
         const TestDisplay = TestFormsDisplay[category.name]?.[test.name] || null;
 
@@ -106,6 +124,7 @@ export default function TestSessionModal(props) {
             ? <TestDisplay
                 key={relevantResults.length}
                 results={relevantResults}
+                onDelete={onDeleteResult}
             />
             : null
         )
@@ -118,6 +137,7 @@ export default function TestSessionModal(props) {
             TestForm
             ? <TestForm
                 onSubmit={submitResult}
+                distances = {[10, 20, 30, 40, 50, 60]}
             />
             : null
         )
@@ -133,13 +153,16 @@ export default function TestSessionModal(props) {
             backdrop="static"
         >
 
-            <div className='modal-page'>
+            <div className='modal-page test-session-page'>
                 <div className='modal-header'>
                     <h4>Sessão de Testes</h4>
                     <Button
                         variant='success'
                         onClick={handleFinish}
+                        size='sm'
+                        className='left-icon'
                     >
+                        <FaCheck />
                         Terminar
                     </Button>
                 </div>

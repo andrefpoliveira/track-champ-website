@@ -1,0 +1,49 @@
+#track-timing-display {
+    margin: 0 calc(1.5rem * 0.5 + 1rem);
+}
+
+#track-timing-display th,
+#track-timing-display td {
+    text-align: center;
+}
+
+#track-timing-display thead th {
+    background-color: #0d6efd;
+}
+
+#track-timing-display thead th:first-of-type {
+    border-top-left-radius: 10px;
+}
+
+#track-timing-display thead th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+#track-timing-display tr:last-child td {
+    border-bottom: none;
+}
+
+#track-timing-display tr:last-child td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+#track-timing-display tr:last-child td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
+
+/* Vertical lines between cells of the table */
+/* #track-timing-display tr td:not(:last-child),
+#track-timing-display tr th:not(:last-child) {
+    border-right-width: var(--bs-border-width);
+} */
+
+.track-timing-form .row {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+.track-timing-form .col {
+    padding: 0;
+    margin-bottom: 0 !important;
+}
