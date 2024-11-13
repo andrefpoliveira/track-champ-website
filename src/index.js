@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import { AuthProvider } from './Logic/AppContext';
 import { ToastProvider } from './Logic/ToastContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import './CSS/forms.css';
 

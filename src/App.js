@@ -23,8 +23,8 @@ function App() {
 					<Outlet />
 				</div>
 				: <div id='unregistered-screen'>
-					<h2>Hey! Great to see you!</h2>
-					<h4>Soon...</h4>
+					<h2>Olá! Bem-vindo!</h2>
+					<h4>Em breve...</h4>
 				</div>
 			}
 		</div>
